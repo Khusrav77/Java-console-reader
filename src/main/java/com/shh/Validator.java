@@ -1,4 +1,4 @@
-package main.java.com.shh;
+package com.shh;
 
 import com.shh.model.CommandType;
 
