@@ -9,13 +9,11 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-
         Scanner scanner = new Scanner(System.in);
         Parser parser = new Parser();
 
         while (true){
             var inputLine = scanner.nextLine();
-
 
 
            if (inputLine.equals("exit"))  {
@@ -27,8 +25,7 @@ public class Main {
             System.out.println(pars);
 
         }
-
-
+        
 
     }
 

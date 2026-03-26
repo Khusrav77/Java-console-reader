@@ -27,9 +27,25 @@ public class Validator {
 
 
     private void validateCreate(String [] data) {
+        if (data.length != 2) {
+            throw new IllegalArgumentException("Invalid number of arguments for Create command");
+        }
+        if (!data[0].equalsIgnoreCase(CommandType.CREATE.name())) {
+            throw new IllegalArgumentException("Command must start with 'Create'");
+        }
     }
 
     private void validateGet(String [] data) {
+        if (data.length != 2) {
+            throw new IllegalArgumentException("Invalid number of arguments for Get command");
+        }
+        if (!data[0].equalsIgnoreCase(CommandType.GET.name())){
+            throw new IllegalArgumentException("Command must start with 'Get'");
+        }
+        if (!isInt(data[1])) {
+            throw new IllegalArgumentException("ID must be a number");
+        }
+
     }
 
     private void validateUpdate(String [] data) {
@@ -37,8 +53,8 @@ public class Validator {
         if (data.length != 3) {
             throw new IllegalArgumentException("Invalid number of arguments for Update command");
         }
-        if (data[0].equalsIgnoreCase(CommandType.UPDATE.name())) {
-            throw new IllegalArgumentException("Command must start with 'update'");
+        if (!data[0].equalsIgnoreCase(CommandType.UPDATE.name())) {
+            throw new IllegalArgumentException("Command must start with 'Update'");
         }
         if (!isInt(data[1])) {
             throw new IllegalArgumentException("ID must be a number");
@@ -53,7 +69,7 @@ public class Validator {
             throw new IllegalArgumentException("Invalid number of arguments for DELETE command");
         }
         if (!data[0].equalsIgnoreCase(CommandType.DELETE.name())){
-            throw new IllegalArgumentException("Command must start with 'delete'");
+            throw new IllegalArgumentException("Command must start with 'Delete'");
         }
 
         if (!isInt(data[1])) {

@@ -56,7 +56,6 @@ public class Parser {
         return new Command(CommandType.UPDATE, id, newValue);
     }
 
-
     private Command parseDelete(String [] data){
 
         var id = Integer.parseInt(data[1]);
