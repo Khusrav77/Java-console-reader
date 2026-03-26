@@ -6,85 +6,81 @@ public class Validator {
 
     public void validate(String [] data) {
 
-        var command = data[0];
+        CommandType commandType;
+
+        try {
+            commandType = CommandType.valueOf(data[0].toUpperCase());
+
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Unknown command type");
+        }
 
 
-        switch (command) {
+         switch (commandType) {
 
-            case "CREATE" -> validateCreate(data);
+            case CREATE -> validateCreate(data);
 
-            case "GET" -> validateGet(data);
+            case GET -> validateGet(data);
 
-            case "UPDATE" -> validateUpdate(data);
+            case UPDATE -> validateUpdate(data);
 
-            case "DELETE" -> validateDelete(data);
+            case DELETE -> validateDelete(data);
 
             default -> throw new IllegalArgumentException("unknown command type");
 
-        };
+        }
 
     }
 
 
     private void validateCreate(String [] data) {
-        if (data.length != 2) {
-            throw new IllegalArgumentException("Invalid number of arguments for Create command");
-        }
-        if (!data[0].equalsIgnoreCase(CommandType.CREATE.name())) {
-            throw new IllegalArgumentException("Command must start with 'Create'");
-        }
+       chekLength(data, 2, CommandType.CREATE);
+
+       chekId(data[1]);
     }
 
     private void validateGet(String [] data) {
-        if (data.length != 2) {
-            throw new IllegalArgumentException("Invalid number of arguments for Get command");
-        }
-        if (!data[0].equalsIgnoreCase(CommandType.GET.name())){
-            throw new IllegalArgumentException("Command must start with 'Get'");
-        }
-        if (!isInt(data[1])) {
-            throw new IllegalArgumentException("ID must be a number");
-        }
+
+        chekLength(data, 2, CommandType.GET);
+
+        chekId(data[1]);
 
     }
 
     private void validateUpdate(String [] data) {
 
-        if (data.length != 3) {
-            throw new IllegalArgumentException("Invalid number of arguments for Update command");
-        }
-        if (!data[0].equalsIgnoreCase(CommandType.UPDATE.name())) {
-            throw new IllegalArgumentException("Command must start with 'Update'");
-        }
-        if (!isInt(data[1])) {
-            throw new IllegalArgumentException("ID must be a number");
-        }
+        chekLength(data, 3, CommandType.UPDATE);
+
+        chekId(data[1]);
     }
 
     private void validateDelete(String [] data) {
 
+        chekLength(data, 2, CommandType.DELETE);
 
-        if (data.length != 2) {
+        chekId(data[1]);
 
-            throw new IllegalArgumentException("Invalid number of arguments for DELETE command");
+    }
+
+    private void chekLength(String[] data, int expected, CommandType command) {
+        if (data.length != expected) {
+           throw new IllegalArgumentException("Invalid number of arguments for " + command + " command");
         }
-        if (!data[0].equalsIgnoreCase(CommandType.DELETE.name())){
-            throw new IllegalArgumentException("Command must start with 'Delete'");
-        }
+    }
 
-        if (!isInt(data[1])) {
+    private void chekId(String id) {
+        if (!isInt(id)) {
             throw new IllegalArgumentException("ID must be a number");
         }
-
     }
 
     private boolean isInt(String id) {
         try {
             Integer.parseInt(id);
-        } catch (Exception e) {
             return true;
+        } catch (NumberFormatException e) {
+            return false;
         }
-        return false;
     }
 
 
