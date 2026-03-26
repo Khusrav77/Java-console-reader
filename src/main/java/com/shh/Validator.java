@@ -36,13 +36,11 @@ public class Validator {
     private void validateCreate(String [] data) {
        chekLength(data, 2, CommandType.CREATE);
 
-       chekId(data[1]);
     }
 
     private void validateGet(String [] data) {
 
         chekLength(data, 2, CommandType.GET);
-
         chekId(data[1]);
 
     }
@@ -50,14 +48,12 @@ public class Validator {
     private void validateUpdate(String [] data) {
 
         chekLength(data, 3, CommandType.UPDATE);
-
         chekId(data[1]);
     }
 
     private void validateDelete(String [] data) {
 
         chekLength(data, 2, CommandType.DELETE);
-
         chekId(data[1]);
 
     }

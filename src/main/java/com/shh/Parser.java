@@ -8,24 +8,28 @@ public class Parser {
 
     public Command parse (String input) {
 
+        final Validator validator = new Validator();
+
+
         if (input == null || input.isBlank()) {
             throw new IllegalArgumentException("Empty input");
         }
         System.out.println(input);
 
         String [] data = input.split(" ", 3);
+        validator.validate(data);
 
-        String command = data[0].toUpperCase();
+        CommandType commandType = CommandType.valueOf(data[0].toUpperCase());
 
 
-        return  switch (command) {
-            case "CREATE" -> parseCreate(data);
+        return  switch (commandType) {
+            case CREATE -> parseCreate(data);
 
-            case "GET" -> parseGet(data);
+            case GET -> parseGet(data);
 
-            case "UPDATE" -> parseUpdate(data);
+            case UPDATE -> parseUpdate(data);
 
-            case "DELETE" -> parseDelete(data);
+            case DELETE -> parseDelete(data);
 
             default -> throw new IllegalArgumentException("unknown command type");
 
