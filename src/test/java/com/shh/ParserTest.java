@@ -11,6 +11,50 @@ public class ParserTest {
 
 
     private Parser parser = new Parser();
+    @Test
+    public void createTest() {
+       // given
+       String input = "Create hello";
+
+       // when
+       Command result = parser.parse(input);
+
+       // then
+       assertEquals(CommandType.CREATE, result.getType());
+       assertEquals("hello", result.getValue());
+
+    }
+
+    @Test
+    public void getTest(){
+        // given
+        String input = "Get 5";
+
+        // when
+        Command result = parser.parse(input);
+
+        // then
+        assertEquals(CommandType.GET, result.getType());
+        assertEquals(5, result.getId());
+        assertNull(result.getValue());
+
+    }
+    
+
+    @Test
+    public void updateTest(){
+        // given
+        String input = "Update 5 Hello";
+
+        // when
+        Command result = parser.parse(input);
+
+        // then
+        assertEquals(CommandType.UPDATE, result.getType());
+        assertEquals("Hello", result.getValue());
+        assertEquals(5, result.getId());
+
+    }
 
     @Test
     public void deleteTest() {

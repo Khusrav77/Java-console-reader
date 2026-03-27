@@ -32,7 +32,7 @@ public class Validator {
         } catch (Exception e) {
             throw new IllegalArgumentException("Unknown command type");
         }
-        
+
     }
 
 

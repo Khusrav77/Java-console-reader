@@ -13,20 +13,20 @@ public class ValidatorTest {
     @Test
     public void deleteIsOkTest() {
         // given
-        String input = "DELETE 5";
+        String [] data = {"DELETE 5"};
 
-        assertDoesNotThrow(() -> validator.validate(input));
+        assertDoesNotThrow(() -> validator.validate(data));
 
     }
 
     @Test
     public void deleteFails1Test() {
         // given
-        String input = "DELETE 5 ssdsd";
+        String [] data = {"DELETE 5 abc"};
 
         Exception ex = assertThrows(
                 IllegalArgumentException.class,
-                () -> validator.validate(input)
+                () -> validator.validate(data)
         );
 
         assertEquals("abc", ex.getMessage());
@@ -36,11 +36,11 @@ public class ValidatorTest {
     @Test
     public void deleteFails2Test() {
 
-        String input = "DELETE asd";
+        String [] data = {"DELETE","asd"};
 
         Exception ex = assertThrows(
                 IllegalArgumentException.class,
-                () -> validator.validate(input)
+                () -> validator.validate(data)
         );
 
         assertEquals("wrong id", ex.getMessage());
