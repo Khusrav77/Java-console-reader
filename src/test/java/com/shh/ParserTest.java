@@ -9,8 +9,9 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class ParserTest {
 
-
     private Parser parser = new Parser();
+
+    // ========== CREATE TEST ===============
     @Test
     public void createTest() {
        // given
@@ -21,10 +22,12 @@ public class ParserTest {
 
        // then
        assertEquals(CommandType.CREATE, result.getType());
+       assertNull(result.getId());
        assertEquals("hello", result.getValue());
 
     }
 
+    // ========== GET TEST ===============
     @Test
     public void getTest(){
         // given
@@ -39,8 +42,23 @@ public class ParserTest {
         assertNull(result.getValue());
 
     }
-    
 
+    // ========== GET ALL TEST ===============
+    @Test
+    void getAllTest() {
+        // given
+        String input = "Get";
+
+        // when
+        Command result = parser.parse(input);
+
+        // then
+        assertEquals(CommandType.GET_ALL, result.getType());
+        assertNull(result.getId());
+        assertNull(result.getValue());
+    }
+
+    // ========== UPDATE TEST ===============
     @Test
     public void updateTest(){
         // given
@@ -56,6 +74,7 @@ public class ParserTest {
 
     }
 
+    // ========== DELETE TEST ===============
     @Test
     public void deleteTest() {
         // given
