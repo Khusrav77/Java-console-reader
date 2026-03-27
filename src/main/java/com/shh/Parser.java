@@ -5,22 +5,15 @@ import com.shh.model.CommandType;
 
 public class Parser {
 
+    private final Validator validator = new Validator();
+
 
     public Command parse (String input) {
 
-        final Validator validator = new Validator();
-
-
-        if (input == null || input.isBlank()) {
-            throw new IllegalArgumentException("Empty input");
-        }
-        System.out.println(input);
-
+        input = input.trim();
         String [] data = input.split(" ", 3);
-        validator.validate(data);
 
-        CommandType commandType = CommandType.valueOf(data[0].toUpperCase());
-
+        CommandType commandType = validator.validate(data);
 
         return  switch (commandType) {
             case CREATE -> parseCreate(data);
@@ -38,6 +31,7 @@ public class Parser {
     }
 
 
+
     private Command parseCreate(String [] data){
 
         var value = data[1];
@@ -47,9 +41,14 @@ public class Parser {
 
     private Command parseGet(String [] data){
 
+        if (data.length == 1) {
+            return new Command(CommandType.GET_ALL, null, null);
+        }
+
         var id = Integer.parseInt(data[1]);
 
         return new Command(CommandType.GET, id, null);
+
     }
 
     private Command parseUpdate(String [] data){
