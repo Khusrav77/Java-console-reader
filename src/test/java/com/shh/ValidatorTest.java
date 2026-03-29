@@ -8,51 +8,82 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ValidatorTest {
 
-    private Validator validator = new Validator();
+    private final Validator validator = new Validator();
 
+    // ========== CREATE TEST ===============
     @Test
     public void createTest() {
         // given
-        String [] data = {"Create", "Hello"};
+        String  input = "Create Hello";
 
         // when
-        CommandType result = validator.validate(data);
+        CommandType result = validator.validate(input);
 
         // then
-        assertDoesNotThrow(() -> validator.validate(data));
         assertEquals(CommandType.CREATE, result);
     }
 
     @Test
-    public void getTest() {
+    public void createIsNotValueTest() {
         // given
-        String [] data = {"Get", "5"};
+        String input = "Create";
 
         // when
-        CommandType result = validator.validate(data);
+        Exception ex = assertThrows(
+                IllegalArgumentException.class,
+                () -> validator.validate(input));
+
+        //then
+        assertEquals("Invalid number of arguments for CREATE command", ex.getMessage());
+    }
+
+    // ========== GET TEST ===============
+    @Test
+    public void getTest() {
+        // given
+        String  input = "Get 5";
+
+        // when
+        CommandType result = validator.validate(input);
 
         // then
-        assertDoesNotThrow(() -> validator.validate(data));
+        assertDoesNotThrow(() -> validator.validate(input));
         assertEquals(CommandType.GET, result);
     }
 
+    @Test
+    public void getInvalidIdTest(){
+         // given
+        String input = "Get abc";
+
+        // when
+        Exception ex = assertThrows(
+                IllegalArgumentException.class,
+                () -> validator.validate(input));
+
+        // then
+        assertEquals("ID must be a number", ex.getMessage());
+    }
+
+    // ========== GET ALL TEST ===============
     @Test
     public void getAllTest() {
         // given
-        String [] data = {"Get"};
+        String  input = "Get";
 
         // when
-        CommandType result = validator.validate(data);
+        CommandType result = validator.validate(input);
 
         // then
-        assertDoesNotThrow(() -> validator.validate(data));
+        assertDoesNotThrow(() -> validator.validate(input));
         assertEquals(CommandType.GET, result);
     }
 
+    // ========== UPDATE TEST ===============
     @Test
     public void updateTest() {
         // given
-        String [] data = {"Update", "5", "Hello"};
+        String data = "Update 5 Hello";
 
         // when
         CommandType result = validator.validate(data);
@@ -63,9 +94,39 @@ public class ValidatorTest {
     }
 
     @Test
+    public void invalidUpdateTest() {
+        // given
+        String input  = "Update";
+
+        // when
+        Exception ex = assertThrows(
+                IllegalArgumentException.class,
+                () -> validator.validate(input));
+
+        // then
+        assertEquals("Invalid number of arguments for UPDATE command", ex.getMessage());
+
+    }
+
+    @Test
+    public void invalidUpdateIdTest() {
+        // given
+        String input = "Update abc Hello";
+
+        // when
+        Exception ex = assertThrows(
+                IllegalArgumentException.class,
+                () -> validator.validate(input));
+
+        // then
+        assertEquals("ID must be a number", ex.getMessage());
+    }
+
+    // ========== DELETE TEST ===============
+    @Test
     public void deleteTest() {
         // given
-        String [] data = {"DELETE", "5"};
+        String  data = "DELETE 5";
 
         // when
         CommandType result = validator.validate(data);
@@ -77,9 +138,9 @@ public class ValidatorTest {
     }
 
     @Test
-    public void deleteFails1Test() {
+    public void deleteShouldFailWhenTooManyArguments() {
         // given
-        String [] data = {"DELETE", "5", "abc"};
+        String data = "DELETE 5 abc";
 
         // when
         Exception ex = assertThrows(
@@ -88,14 +149,14 @@ public class ValidatorTest {
         );
 
         // then
-        assertEquals("Invalid number of arguments", ex.getMessage());
+        assertEquals("Invalid number of arguments for DELETE command", ex.getMessage());
 
     }
 
     @Test
-    public void deleteFails2Test() {
+    public void deleteShouldFailWhenIdIsNotNumber() {
         // given
-        String [] data = {"DELETE","asd"};
+        String data = "DELETE asd";
 
         // when
         Exception ex = assertThrows(

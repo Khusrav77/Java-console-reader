@@ -9,7 +9,8 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class ParserTest {
 
-    private Parser parser = new Parser();
+    private final Validator validator = new Validator();
+    private final Parser parser = new Parser(validator);
 
     // ========== CREATE TEST ===============
     @Test
