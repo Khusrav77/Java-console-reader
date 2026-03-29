@@ -4,35 +4,38 @@ import com.shh.model.CommandType;
 
 public class Validator {
 
-    public CommandType validate(String [] data) {
+    public CommandType validate(String  input) {
 
-        if (data == null || data.length == 0) {
+        if (input == null || input.isBlank()) {
             throw new IllegalArgumentException("Command data cannot be null or empty");
         }
+
+        input = input.trim();
+        String[] data = input.split(" ", 3);
 
         CommandType commandType;
 
         try {
             commandType = CommandType.valueOf(data[0].toUpperCase());
-            switch (commandType) {
-
-                case CREATE -> validateCreate(data);
-
-                case GET -> validateGet(data);
-
-                case UPDATE -> validateUpdate(data);
-
-                case DELETE -> validateDelete(data);
-
-                default -> throw new IllegalArgumentException("unknown command type");
-
-            }
-            return commandType;
 
         } catch (Exception e) {
-            throw new IllegalArgumentException("Unknown command type");
+            throw new IllegalArgumentException("Unknown command type" + data[0]);
         }
-        
+
+        switch (commandType) {
+
+            case CREATE -> validateCreate(data);
+
+            case GET -> validateGet(data);
+
+            case UPDATE -> validateUpdate(data);
+
+            case DELETE -> validateDelete(data);
+
+            default -> throw new IllegalArgumentException("unknown command type");
+
+        }
+        return commandType;
     }
 
 

@@ -10,7 +10,8 @@ public class Main {
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
-        Parser parser = new Parser();
+        Validator validator = new Validator();
+        Parser parser = new Parser(validator);
 
         while (true){
             var inputLine = scanner.nextLine();
@@ -20,9 +21,9 @@ public class Main {
                 break;
             }
 
-            Command pars = parser.parse(inputLine);
+            Command command = parser.parse(inputLine);
 
-            System.out.println(pars);
+            System.out.println(command);
 
         }
         

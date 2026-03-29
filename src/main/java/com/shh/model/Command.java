@@ -18,7 +18,7 @@ public final class Command {
         return type;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

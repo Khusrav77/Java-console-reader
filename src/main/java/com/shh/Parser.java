@@ -3,17 +3,19 @@ package com.shh;
 import com.shh.model.Command;
 import com.shh.model.CommandType;
 
-public class Parser {
+public  class Parser {
 
-    private final Validator validator = new Validator();
+    private final Validator validator;
+
+    public Parser(Validator validator) {
+        this.validator = validator;
+    }
 
 
     public Command parse (String input) {
 
-        input = input.trim();
-        String [] data = input.split(" ", 3);
-
-        CommandType commandType = validator.validate(data);
+        CommandType commandType = validator.validate(input);
+        String[] data = input.split(" ", 3);
 
         return  switch (commandType) {
             case CREATE -> parseCreate(data);
@@ -32,14 +34,14 @@ public class Parser {
 
 
 
-    private Command parseCreate(String [] data){
+    private Command parseCreate(String[] data){
 
         var value = data[1];
 
         return new Command(CommandType.CREATE, null, value);
     }
 
-    private Command parseGet(String [] data){
+    private Command parseGet(String[] data){
 
         if (data.length == 1) {
             return new Command(CommandType.GET_ALL, null, null);
@@ -51,7 +53,7 @@ public class Parser {
 
     }
 
-    private Command parseUpdate(String [] data){
+    private Command parseUpdate(String[] data){
 
         var id = Integer.parseInt(data[1]);
         var newValue = data[2];
@@ -59,7 +61,7 @@ public class Parser {
         return new Command(CommandType.UPDATE, id, newValue);
     }
 
-    private Command parseDelete(String [] data){
+    private Command parseDelete(String[] data){
 
         var id = Integer.parseInt(data[1]);
 
