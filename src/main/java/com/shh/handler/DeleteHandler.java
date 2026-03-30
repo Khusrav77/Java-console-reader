@@ -1,11 +1,23 @@
 package com.shh.handler;
 
 import com.shh.model.Command;
+import com.shh.model.OutputMessage;
+import com.shh.repository.Storage;
 
 public class DeleteHandler implements CommandHandler{
 
-    @Override
-    public void handle(Command command) {
+    private Storage storage;
 
+
+    public DeleteHandler(Storage storage) {
+        this.storage = storage;
+    }
+
+
+    @Override
+    public OutputMessage handle(Command command) {
+        String result = storage.delete(command.getId());
+
+        return new OutputMessage(result);
     }
 }
