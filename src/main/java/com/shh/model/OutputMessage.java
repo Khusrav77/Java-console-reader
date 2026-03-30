@@ -1,10 +1,10 @@
 package com.shh.model;
 
-public class Result {
+public class OutputMessage {
 
     private final String msg;
 
-    public Result(String msg) {
+    public OutputMessage(String msg) {
         this.msg = msg;
     }
 

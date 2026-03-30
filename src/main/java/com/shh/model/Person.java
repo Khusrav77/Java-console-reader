@@ -3,9 +3,9 @@ package com.shh.model;
 public class Person {
 
     static int count;
-
     private String name;
     private Integer age;
+
 
     public Person(String name, Integer age) {
         this.name = name;
@@ -21,12 +21,13 @@ public class Person {
     }
 
     public Person(Integer age) {
-
         this("Bob", age);
         System.out.println("k3");
     }
 
+
     public static void main(String[] args) {
+
         Person person = new Person();
 
         Person person1 = new Person();
@@ -35,7 +36,6 @@ public class Person {
         System.out.println(Person.count++);
         System.out.println(++Person.count);
         System.out.println(Person.count);
-
 
     }
 

@@ -1,38 +1,33 @@
 package com.shh.handler;
 
 import com.shh.model.Command;
-import com.shh.model.Result;
+import com.shh.model.CommandType;
+import com.shh.model.OutputMessage;
+
+import java.util.Map;
 
 public class CommandDispatcher {
 
-    private final CreateHandler createHandler;
-    private final GetHandler getHandler;
-    private final GetAllHandler getAllHandler;
-    private final UpdateHandler updateHandler;
-    private final DeleteHandler deleteHandler;
+    private final Map<CommandType, CommandHandler> handlers;
 
 
-    public CommandDispatcher(CreateHandler createHandler,
-                             GetHandler getHandler,
-                             GetAllHandler getAllHandler,
-                             UpdateHandler updateHandler,
-                             DeleteHandler deleteHandler) {
-        this.createHandler = createHandler;
-        this.getHandler = getHandler;
-        this.getAllHandler = getAllHandler;
-        this.updateHandler = updateHandler;
-        this.deleteHandler = deleteHandler;
+    public CommandDispatcher(Map<CommandType, CommandHandler> handlers){
+        this.handlers = handlers;
     }
 
-    public Result handleCammand(Command command) {
 
-       return switch (command.getType()) {
-           case CREATE -> createHandler.handle(command);
-           case GET -> getAllHandler.handle(command);
-           default -> new Result("is not implemented");
-        };
 
+    public OutputMessage handleCommand(Command command) {
+        CommandHandler handler = handlers.get(command.getType());
+
+        if (handler == null) {
+            throw new  IllegalArgumentException("Handler not found for: " +command.getType());
+        }
+
+        return handler.handle(command);
     }
+
+
 
 
 }

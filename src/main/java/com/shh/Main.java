@@ -4,7 +4,7 @@ import com.shh.handler.CommandDispatcher;
 import com.shh.handler.CreateHandler;
 import com.shh.handler.GetAllHandler;
 import com.shh.model.Command;
-import com.shh.model.Result;
+import com.shh.model.OutputMessage;
 import com.shh.repository.Storage;
 import java.util.Scanner;
 
@@ -33,7 +33,7 @@ public class Main {
                 }
 
                 Command command = parser.parse(inputLine);
-                Result result = commandDispatcher.handleCammand(command);
+                OutputMessage result = commandDispatcher.handleCommand(command);
 
                 System.out.println(result.getMsg());
 

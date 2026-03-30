@@ -1,7 +1,7 @@
 package com.shh.handler;
 
 import com.shh.model.Command;
-import com.shh.model.Result;
+import com.shh.model.OutputMessage;
 import com.shh.repository.Storage;
 
 public class CreateHandler implements CommandHandler {
@@ -15,11 +15,10 @@ public class CreateHandler implements CommandHandler {
 
 
     @Override
-    public Result handle(Command command) {
+    public OutputMessage handle(Command command) {
 
         Integer id = storage.create(command.getValue());
-
-        return new Result("String saved with id = "+ id);
+        return new OutputMessage("String saved with id = "+ id);
     }
 
 

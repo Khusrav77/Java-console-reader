@@ -1,9 +1,9 @@
 package com.shh.handler;
 
 import com.shh.model.Command;
-import com.shh.model.Result;
+import com.shh.model.OutputMessage;
 
 public interface CommandHandler {
 
-    Result handle(Command command);
+    OutputMessage handle(Command command);
 }
