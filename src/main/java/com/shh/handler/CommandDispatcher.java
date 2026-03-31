@@ -21,7 +21,7 @@ public final class CommandDispatcher {
         CommandHandler handler = handlers.get(command.getType());
 
         if (handler == null) {
-            throw new  IllegalArgumentException("Handler not found for: " +command.getType());
+            throw new  IllegalArgumentException("No handler registered for command type: " +command.getType());
         }
 
         return handler.handle(command);

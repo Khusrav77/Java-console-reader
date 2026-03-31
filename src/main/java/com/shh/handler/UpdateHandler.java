@@ -7,17 +7,17 @@ import com.shh.repository.Repository;
 
 public final class UpdateHandler implements CommandHandler{
 
-    private Repository storage;
+    private Repository<String, Integer> repository;
 
-    public UpdateHandler(Repository storage) {
-        this.storage = storage;
+    public UpdateHandler(Repository repository) {
+        this.repository = repository;
     }
 
 
 
     @Override
     public OutputMessage handle(Command command) {
-        String result = storage.update(command.getId(), command.getValue());
+        String result = repository.update(command.getId(), command.getValue());
 
         return new OutputMessage("Update: " + result);
     }

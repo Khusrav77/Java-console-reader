@@ -7,17 +7,17 @@ import com.shh.repository.Repository;
 
 public final class DeleteHandler implements CommandHandler{
 
-    private Repository storage;
+    private Repository<String, Integer> repository;
 
 
-    public DeleteHandler(Repository storage) {
-        this.storage = storage;
+    public DeleteHandler(Repository repository) {
+        this.repository = repository;
     }
 
 
     @Override
     public OutputMessage handle(Command command) {
-        String result = storage.delete(command.getId());
+        String result = repository.delete(command.getId());
 
         return new OutputMessage(result);
     }
