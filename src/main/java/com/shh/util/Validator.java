@@ -1,8 +1,8 @@
-package com.shh;
+package com.shh.util;
 
 import com.shh.model.CommandType;
 
-public class Validator {
+public final class Validator {
 
     public CommandType validate(String  input) {
 

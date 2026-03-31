@@ -1,41 +1,40 @@
 package com.shh.repository;
 
-import com.shh.model.OutputMessage;
 
 import java.util.*;
 
-public class Storage {
+public final class Storage<T> implements Repository<T> {
 
     private Integer id = 0;
-    private final Map<Integer, String> storageMap = new HashMap<>();
+    private final Map<Integer, T> storageMap = new HashMap<>();
 
 
-    public Integer create(String input) {
+    public Integer create(T data) {
         id++;
-        storageMap.put(id, input);
+        storageMap.put(id, data);
         return id;
     }
 
-    public String get(Integer id) {
+    public T get(Integer id) {
         validate(id);
         return storageMap.get(id);
     }
 
-    public OutputMessage getAll () {
+    public List<T> getAll () {
         var list = storageMap.values();
         if (list.isEmpty()) {
-            return new OutputMessage("No data found");
+            throw  new IllegalArgumentException("No data found");
         }
-        return new OutputMessage(list.toString());
+        return new ArrayList<>(list);
     }
 
-    public String update(Integer id, String newData) {
+    public T update(Integer id, T newData) {
         validate(id);
         storageMap.put(id, newData);
         return storageMap.get(id);
     }
 
-    public String delete(Integer id) {
+    public T delete(Integer id) {
         validate(id);
         return storageMap.remove(id);
     }

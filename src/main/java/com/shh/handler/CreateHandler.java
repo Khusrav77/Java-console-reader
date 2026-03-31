@@ -4,7 +4,7 @@ import com.shh.model.Command;
 import com.shh.model.OutputMessage;
 import com.shh.repository.Storage;
 
-public class CreateHandler implements CommandHandler {
+public final class CreateHandler implements CommandHandler {
 
     private final Storage storage;
 

@@ -6,7 +6,7 @@ import com.shh.model.OutputMessage;
 
 import java.util.Map;
 
-public class CommandDispatcher {
+public final class CommandDispatcher {
 
     private final Map<CommandType, CommandHandler> handlers;
 
