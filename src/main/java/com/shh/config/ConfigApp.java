@@ -1,5 +1,6 @@
 package com.shh.config;
 
+import com.shh.repository.Repository;
 import com.shh.util.Parser;
 import com.shh.util.Validator;
 import com.shh.handler.*;
@@ -7,6 +8,7 @@ import com.shh.model.CommandType;
 import com.shh.repository.Storage;
 
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public final class ConfigApp {
 
@@ -14,9 +16,10 @@ public final class ConfigApp {
 
     public CommandDispatcher dispatcher(){
 
-        Storage storage = new Storage();
+        Repository<String, Integer> storage = new Storage<>();
+        AtomicInteger idGenerator = new AtomicInteger();
 
-        CommandHandler createHandler = new  CreateHandler(storage);
+        CommandHandler createHandler = new  CreateHandler(storage, idGenerator);
         CommandHandler getHandler = new GetHandler(storage);
         CommandHandler getAllHandler = new GetAllHandler(storage);
         CommandHandler updateHandler =  new UpdateHandler(storage);
@@ -37,7 +40,7 @@ public final class ConfigApp {
         return new Parser(validator());
     }
 
-    private Validator validator() {
+    private  Validator validator() {
         return new Validator();
     }
 }

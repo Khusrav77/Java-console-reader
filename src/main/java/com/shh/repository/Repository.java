@@ -2,12 +2,12 @@ package com.shh.repository;
 
 import java.util.List;
 
-public interface Repository<T> {
+public interface Repository<T, ID> {
 
-    T create(T data);
-    T get(Integer id);
+    ID create(ID id, T data);
+    T get(ID id);
     List<T> getAll();
-    T update(Integer id, T newData);
-    T delete(Integer id);
+    T update(ID id, T newData);
+    T delete(ID id);
 
 }

@@ -7,16 +7,16 @@ import com.shh.repository.Repository;
 
 public final class GetHandler implements CommandHandler{
 
-    private Repository storage;
+    private Repository<String, Integer> repository;
 
-    public GetHandler(Repository storage) {
-        this.storage = storage;
+    public GetHandler(Repository repository) {
+        this.repository = repository;
     }
 
 
     @Override
     public OutputMessage handle(Command command) {
-        String result = storage.get(command.getId());
+        String result = repository.get(command.getId());
 
         return new OutputMessage(result);
     }

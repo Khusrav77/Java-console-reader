@@ -19,7 +19,7 @@ public final class Validator {
             commandType = CommandType.valueOf(data[0].toUpperCase());
 
         } catch (Exception e) {
-            throw new IllegalArgumentException("Unknown command type" + data[0]);
+            throw new IllegalArgumentException("Unknown command type " + data[0]);
         }
 
         switch (commandType) {
