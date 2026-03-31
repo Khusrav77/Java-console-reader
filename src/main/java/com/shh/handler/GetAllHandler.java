@@ -6,7 +6,7 @@ import com.shh.repository.Storage;
 
 import java.util.List;
 
-public class GetAllHandler implements CommandHandler{
+public final class GetAllHandler implements CommandHandler{
 
     private final Storage storage;
 

@@ -1,6 +1,6 @@
 package com.shh.model;
 
-public class Person {
+public final class Person {
 
     static int count;
     private String name;

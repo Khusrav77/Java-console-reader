@@ -1,4 +1,4 @@
-package com.shh;
+package com.shh.util;
 
 
 import com.shh.model.CommandType;

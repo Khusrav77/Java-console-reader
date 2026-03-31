@@ -1,6 +1,6 @@
 package com.shh.model;
 
-public class OutputMessage {
+public final class OutputMessage {
 
     private final String msg;
 

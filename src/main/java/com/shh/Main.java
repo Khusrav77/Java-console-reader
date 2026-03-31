@@ -4,6 +4,8 @@ import com.shh.config.ConfigApp;
 import com.shh.handler.CommandDispatcher;
 import com.shh.model.Command;
 import com.shh.model.OutputMessage;
+import com.shh.util.Parser;
+
 import java.util.Scanner;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or

@@ -1,14 +1,14 @@
 package com.shh.config;
 
-import com.shh.Parser;
-import com.shh.Validator;
+import com.shh.util.Parser;
+import com.shh.util.Validator;
 import com.shh.handler.*;
 import com.shh.model.CommandType;
 import com.shh.repository.Storage;
 
 import java.util.Map;
 
-public class ConfigApp {
+public final class ConfigApp {
 
 
 

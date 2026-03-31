@@ -2,14 +2,15 @@ package com.shh.handler;
 
 import com.shh.model.Command;
 import com.shh.model.OutputMessage;
-import com.shh.repository.Storage;
-
-public class DeleteHandler implements CommandHandler{
-
-    private Storage storage;
+import com.shh.repository.Repository;
 
 
-    public DeleteHandler(Storage storage) {
+public final class DeleteHandler implements CommandHandler{
+
+    private Repository storage;
+
+
+    public DeleteHandler(Repository storage) {
         this.storage = storage;
     }
 
