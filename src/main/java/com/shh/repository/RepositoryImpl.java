@@ -1,18 +1,15 @@
 package com.shh.repository;
 
-
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 
-public final class Storage<T, ID> implements Repository<T, ID> {
+public final class RepositoryImpl implements Repository<Integer, String> {
 
-    private final Map<ID, T> storageMap = new ConcurrentHashMap<>();
-
-
+    private final Map<Integer, String> storageMap = new ConcurrentHashMap<>();
 
     @Override
-    public ID create(ID id, T data) {
+    public Integer create(Integer id, String data) {
 
         if(storageMap.containsKey(id)){
             throw new IllegalArgumentException("ID already exists: " + id);
@@ -22,39 +19,35 @@ public final class Storage<T, ID> implements Repository<T, ID> {
     }
 
     @Override
-    public T get(ID id) {
+    public Integer get(Integer id) {
         validate(id);
         return storageMap.get(id);
     }
 
     @Override
-    public List<T> getAll () {
+    public List<String> getAll () {
         return new ArrayList<>(storageMap.values());
     }
 
     @Override
-    public T update(ID id, T newData) {
+    public String update(Integer id, String newData) {
         validate(id);
         storageMap.put(id, newData);
         return newData;
     }
 
     @Override
-    public T delete(ID id) {
+    public Integer delete(Integer id) {
         validate(id);
         return storageMap.remove(id);
     }
 
-
-    private T validate(ID id) {
-        T value = storageMap.get(id);
+    private Integer validate(Integer id) {
+        Integer value = storageMap.get(id);
         if (value == null) {
             throw new IllegalArgumentException("Data not found for id " + id);
         }
         return value;
     }
-
-
-
 
 }

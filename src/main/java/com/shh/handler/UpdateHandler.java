@@ -13,12 +13,9 @@ public final class UpdateHandler implements CommandHandler{
         this.repository = repository;
     }
 
-
-
     @Override
     public OutputMessage handle(Command command) {
         String result = repository.update(command.getId(), command.getValue());
-
         return new OutputMessage("Update: " + result);
     }
 }

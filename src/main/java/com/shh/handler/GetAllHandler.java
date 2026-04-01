@@ -13,12 +13,9 @@ public final class GetAllHandler implements CommandHandler{
         this.repository = repository;
     }
 
-
     @Override
     public OutputMessage handle(Command command) {
-
         var list = repository.getAll();
-
         return new OutputMessage(list.toString());
     }
 }

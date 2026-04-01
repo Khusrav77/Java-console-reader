@@ -5,25 +5,23 @@ import com.shh.util.Parser;
 import com.shh.util.Validator;
 import com.shh.handler.*;
 import com.shh.model.CommandType;
-import com.shh.repository.Storage;
+import com.shh.repository.RepositoryImpl;
 
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public final class ConfigApp {
 
-
-
     public CommandDispatcher dispatcher(){
 
-        Repository<String, Integer> storage = new Storage<>();
+        Repository<Integer, String> repository = new RepositoryImpl();
         AtomicInteger idGenerator = new AtomicInteger();
 
-        CommandHandler createHandler = new  CreateHandler(storage, idGenerator);
-        CommandHandler getHandler = new GetHandler(storage);
-        CommandHandler getAllHandler = new GetAllHandler(storage);
-        CommandHandler updateHandler =  new UpdateHandler(storage);
-        CommandHandler deleteHandler = new DeleteHandler(storage);
+        CommandHandler createHandler = new  CreateHandler(repository, idGenerator);
+        CommandHandler getHandler = new GetHandler(repository);
+        CommandHandler getAllHandler = new GetAllHandler(repository);
+        CommandHandler updateHandler =  new UpdateHandler(repository);
+        CommandHandler deleteHandler = new DeleteHandler(repository);
 
         Map<CommandType, CommandHandler> handlers = Map.of(
                 CommandType.CREATE, createHandler,

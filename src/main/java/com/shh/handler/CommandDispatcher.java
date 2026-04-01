@@ -10,24 +10,16 @@ public final class CommandDispatcher {
 
     private final Map<CommandType, CommandHandler> handlers;
 
-
     public CommandDispatcher(Map<CommandType, CommandHandler> handlers){
         this.handlers = handlers;
     }
 
-
-
     public OutputMessage handleCommand(Command command) {
         CommandHandler handler = handlers.get(command.getType());
-
         if (handler == null) {
             throw new  IllegalArgumentException("No handler registered for command type: " +command.getType());
         }
-
         return handler.handle(command);
     }
-
-
-
 
 }

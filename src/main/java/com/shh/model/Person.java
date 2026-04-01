@@ -6,7 +6,6 @@ public final class Person {
     private String name;
     private Integer age;
 
-
     public Person(String name, Integer age) {
         this.name = name;
         this.age = age;
@@ -24,7 +23,6 @@ public final class Person {
         this("Bob", age);
         System.out.println("k3");
     }
-
 
     public static void main(String[] args) {
 
@@ -46,7 +44,4 @@ public final class Person {
                 ", age=" + age +
                 '}';
     }
-
-
-
 }

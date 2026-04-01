@@ -13,11 +13,9 @@ public final class GetHandler implements CommandHandler{
         this.repository = repository;
     }
 
-
     @Override
     public OutputMessage handle(Command command) {
         String result = repository.get(command.getId());
-
         return new OutputMessage(result);
     }
 }
