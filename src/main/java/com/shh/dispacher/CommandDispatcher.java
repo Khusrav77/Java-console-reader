@@ -1,5 +1,6 @@
-package com.shh.handler;
+package com.shh.dispacher;
 
+import com.shh.handler.CommandHandler;
 import com.shh.model.Command;
 import com.shh.model.CommandType;
 import com.shh.model.OutputMessage;

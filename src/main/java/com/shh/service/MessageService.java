@@ -4,9 +4,9 @@ import java.util.Collection;
 
 public interface MessageService {
 
-    Integer create();
-    String get();
+    Integer create(String data);
+    String get(Integer id);
     Collection<String> getAll();
-    void update();
-    void delete();
+    String update(Integer id, String data);
+    String delete(Integer id);
 }

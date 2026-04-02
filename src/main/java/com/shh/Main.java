@@ -1,7 +1,7 @@
 package com.shh;
 
 import com.shh.config.ConfigApp;
-import com.shh.handler.CommandDispatcher;
+import com.shh.dispacher.CommandDispatcher;
 import com.shh.model.Command;
 import com.shh.model.OutputMessage;
 import com.shh.util.Parser;

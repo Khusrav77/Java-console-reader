@@ -2,20 +2,20 @@ package com.shh.handler;
 
 import com.shh.model.Command;
 import com.shh.model.OutputMessage;
-import com.shh.repository.Repository;
+import com.shh.service.MessageService;
 
 
 public final class GetHandler implements CommandHandler{
 
-    private Repository<String, Integer> repository;
+    private final MessageService messageService;
 
-    public GetHandler(Repository repository) {
-        this.repository = repository;
+    public GetHandler(MessageService messageService) {
+        this.messageService = messageService;
     }
 
     @Override
     public OutputMessage handle(Command command) {
-        String result = repository.get(command.getId());
+        var result = messageService.get(command.getId());
         return new OutputMessage(result);
     }
 }

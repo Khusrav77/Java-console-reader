@@ -1,6 +1,9 @@
 package com.shh.config;
 
+import com.shh.dispacher.CommandDispatcher;
 import com.shh.repository.Repository;
+import com.shh.service.MessageService;
+import com.shh.service.MessageServiceImpl;
 import com.shh.util.Parser;
 import com.shh.util.Validator;
 import com.shh.handler.*;
@@ -16,12 +19,13 @@ public final class ConfigApp {
 
         Repository<Integer, String> repository = new RepositoryImpl();
         AtomicInteger idGenerator = new AtomicInteger();
+        MessageService messageService = new MessageServiceImpl(repository, idGenerator);
 
-        CommandHandler createHandler = new  CreateHandler(repository, idGenerator);
-        CommandHandler getHandler = new GetHandler(repository);
-        CommandHandler getAllHandler = new GetAllHandler(repository);
-        CommandHandler updateHandler =  new UpdateHandler(repository);
-        CommandHandler deleteHandler = new DeleteHandler(repository);
+        CommandHandler createHandler = new  CreateHandler(messageService);
+        CommandHandler getHandler = new GetHandler(messageService);
+        CommandHandler getAllHandler = new GetAllHandler(messageService);
+        CommandHandler updateHandler =  new UpdateHandler(messageService);
+        CommandHandler deleteHandler = new DeleteHandler(messageService);
 
         Map<CommandType, CommandHandler> handlers = Map.of(
                 CommandType.CREATE, createHandler,
