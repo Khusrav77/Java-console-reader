@@ -1,29 +1,31 @@
 package com.shh.config;
 
+import com.shh.dispacher.CommandDispatcher;
 import com.shh.repository.Repository;
+import com.shh.service.MessageService;
+import com.shh.service.MessageServiceImpl;
 import com.shh.util.Parser;
 import com.shh.util.Validator;
 import com.shh.handler.*;
 import com.shh.model.CommandType;
-import com.shh.repository.Storage;
+import com.shh.repository.RepositoryImpl;
 
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public final class ConfigApp {
 
-
-
     public CommandDispatcher dispatcher(){
 
-        Repository<String, Integer> storage = new Storage<>();
+        Repository<Integer, String> repository = new RepositoryImpl();
         AtomicInteger idGenerator = new AtomicInteger();
+        MessageService messageService = new MessageServiceImpl(repository, idGenerator);
 
-        CommandHandler createHandler = new  CreateHandler(storage, idGenerator);
-        CommandHandler getHandler = new GetHandler(storage);
-        CommandHandler getAllHandler = new GetAllHandler(storage);
-        CommandHandler updateHandler =  new UpdateHandler(storage);
-        CommandHandler deleteHandler = new DeleteHandler(storage);
+        CommandHandler createHandler = new  CreateHandler(messageService);
+        CommandHandler getHandler = new GetHandler(messageService);
+        CommandHandler getAllHandler = new GetAllHandler(messageService);
+        CommandHandler updateHandler =  new UpdateHandler(messageService);
+        CommandHandler deleteHandler = new DeleteHandler(messageService);
 
         Map<CommandType, CommandHandler> handlers = Map.of(
                 CommandType.CREATE, createHandler,

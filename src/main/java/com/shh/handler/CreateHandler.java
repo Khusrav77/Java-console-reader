@@ -2,32 +2,20 @@ package com.shh.handler;
 
 import com.shh.model.Command;
 import com.shh.model.OutputMessage;
-import com.shh.repository.Repository;
-
-import java.util.concurrent.atomic.AtomicInteger;
+import com.shh.service.MessageService;
 
 
 public final class CreateHandler implements CommandHandler {
 
-    private final Repository<String, Integer> repository;
-    private final AtomicInteger idGenerator;
+    private final MessageService  messageService;
 
-
-    public CreateHandler(Repository<String, Integer> repository, AtomicInteger idGenerator) {
-        this.repository = repository;
-        this.idGenerator = idGenerator;
+    public CreateHandler(MessageService messageService) {
+        this.messageService = messageService;
     }
-
-
 
     @Override
     public OutputMessage handle(Command command) {
-
-        Integer id = idGenerator.incrementAndGet();
-        repository.create(id, command.getValue());
-
-        return new OutputMessage("String saved with id = "+ id);
+       var id = messageService.create(command.getValue());
+       return new OutputMessage("String saved with id = "+ id);
     }
-
-
 }

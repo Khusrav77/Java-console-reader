@@ -2,7 +2,6 @@ package com.shh.model;
 
 public final class Command {
 
-
     private final CommandType type;
     private final Integer id;
     private final String value;
@@ -13,15 +12,12 @@ public final class Command {
         this.value = value;
     }
 
-
     public  CommandType getType() {
         return type;
     }
-
     public Integer getId() {
         return id;
     }
-
     public String getValue() {
         return value;
     }
