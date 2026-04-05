@@ -17,10 +17,9 @@ import java.util.Map;
 public final class ConfigApp {
 
     public CommandDispatcher dispatcher(){
-
-        Repository<Integer, String> repository = new RepositoryImpl();
         IdGenerator idGenerator = new IdGeneratorImpl();
-        MessageService messageService = new MessageServiceImpl(repository, idGenerator);
+        Repository<Integer, String> repository = new RepositoryImpl(idGenerator);
+        MessageService messageService = new MessageServiceImpl(repository);
 
         CommandHandler createHandler = new  CreateHandler(messageService);
         CommandHandler getHandler = new GetHandler(messageService);

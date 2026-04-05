@@ -5,24 +5,19 @@ import com.shh.util.IdGenerator;
 
 
 import java.util.Collection;
-import java.util.concurrent.atomic.AtomicInteger;
+
 
 public class MessageServiceImpl implements MessageService {
 
     private final   Repository<Integer,String> repository;
-    private final IdGenerator idGenerator;
 
-    public MessageServiceImpl(Repository<Integer, String> repository,
-                              IdGenerator idGenerator) {
+    public MessageServiceImpl(Repository<Integer, String> repository) {
         this.repository = repository;
-        this.idGenerator = idGenerator;
     }
 
     @Override
     public Integer create(String data) {
-        Integer id = idGenerator.nextId();
-        repository.save(id, data);
-        return id;
+       return repository.create(data);
     }
 
     @Override
@@ -40,7 +35,7 @@ public class MessageServiceImpl implements MessageService {
     public String update(Integer id, String data) {
         repository.get(id).orElseThrow(
                 ()-> new IllegalArgumentException("Message not found"));
-        repository.save(id, data);
+        repository.update(id, data);
         return "Message with id " + id + " was updated";
     }
 
