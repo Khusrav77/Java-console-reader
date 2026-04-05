@@ -1,16 +1,24 @@
 package com.shh.repository;
-
+import com.shh.util.IdGenerator;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 
 public final class RepositoryImpl implements Repository<Integer, String> {
 
+    private final IdGenerator idGenerator;
+
+    public RepositoryImpl(IdGenerator idGenerator) {
+        this.idGenerator = idGenerator;
+    }
+
     private final Map<Integer, String> storageMap = new ConcurrentHashMap<>();
 
     @Override
-    public void save(Integer id, String data) {
+    public Integer create(String data) {
+        var id = idGenerator.nextId();
         storageMap.put(id, data);
+        return id;
     }
 
     @Override
@@ -21,6 +29,12 @@ public final class RepositoryImpl implements Repository<Integer, String> {
     @Override
     public Collection<String> getAll () {
         return new ArrayList<>(storageMap.values());
+    }
+
+    @Override
+    public boolean update(Integer id, String data) {
+       storageMap.put(id, data);
+        return true;
     }
 
     @Override
