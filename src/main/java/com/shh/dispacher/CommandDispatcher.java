@@ -18,7 +18,8 @@ public final class CommandDispatcher {
     public OutputMessage handleCommand(Command command) {
         CommandHandler handler = handlers.get(command.getType());
         if (handler == null) {
-            throw new  IllegalArgumentException("No handler registered for command type: " +command.getType());
+            throw new  IllegalArgumentException(
+                    "No handler registered for command type: " +command.getType());
         }
         return handler.handle(command);
     }

@@ -16,9 +16,8 @@ import java.util.Map;
 
 public final class ConfigApp {
 
-    public CommandDispatcher dispatcher(){
-        IdGenerator idGenerator = new IdGeneratorImpl();
-        Repository<Integer, String> repository = new RepositoryImpl(idGenerator);
+    public CommandDispatcher dispatcher(Repository<Integer, String> repository){
+
         MessageService messageService = new MessageServiceImpl(repository);
 
         CommandHandler createHandler = new  CreateHandler(messageService);
@@ -36,6 +35,11 @@ public final class ConfigApp {
         );
 
         return new CommandDispatcher(handlers);
+    }
+
+    public Repository repository(Map<Integer,String> map) {
+        IdGenerator idGenerator = new IdGeneratorImpl();
+        return new RepositoryImpl(idGenerator);
     }
 
     public Parser parser() {

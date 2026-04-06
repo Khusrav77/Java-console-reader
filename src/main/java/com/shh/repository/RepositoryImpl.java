@@ -32,13 +32,17 @@ public final class RepositoryImpl implements Repository<Integer, String> {
     }
 
     @Override
-    public boolean update(Integer id, String data) {
+    public void update(Integer id, String data) {
        storageMap.put(id, data);
-        return true;
     }
 
     @Override
     public boolean delete(Integer id) {
         return storageMap.remove(id) != null;
+    }
+
+    @Override
+    public Map<Integer, String> getMap() {
+        return storageMap; // вернуть копию
     }
 }
