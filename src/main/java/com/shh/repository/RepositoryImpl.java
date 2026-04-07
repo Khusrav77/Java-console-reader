@@ -2,18 +2,18 @@ package com.shh.repository;
 import com.shh.service.DataLoader;
 import com.shh.util.IdGenerator;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 
 
 public final class RepositoryImpl implements Repository<Integer, String> {
-    private final DataLoader dataLoader;
+
     private final IdGenerator idGenerator;
-    private  Map<Integer, String> storageMap = new ConcurrentHashMap<>();
+    private final DataLoader dataLoader;
+    private  Map<Integer, String> storageMap;
 
     public RepositoryImpl(IdGenerator idGenerator, DataLoader dataLoader) {
         this.idGenerator = idGenerator;
         this.dataLoader = dataLoader;
-        storageMap = dataLoader.load();
+        this.storageMap = dataLoader.load();
     }
 
     @Override
@@ -49,6 +49,6 @@ public final class RepositoryImpl implements Repository<Integer, String> {
 
     @Override
     public Map<Integer, String> getMap() {
-        return storageMap; // вернуть копию
+        return new HashMap<>(storageMap); // вернуть копию
     }
 }
