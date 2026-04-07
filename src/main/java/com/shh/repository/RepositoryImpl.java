@@ -1,23 +1,26 @@
 package com.shh.repository;
+import com.shh.service.DataLoader;
 import com.shh.util.IdGenerator;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 
 public final class RepositoryImpl implements Repository<Integer, String> {
-
+    private final DataLoader dataLoader;
     private final IdGenerator idGenerator;
+    private  Map<Integer, String> storageMap = new ConcurrentHashMap<>();
 
-    public RepositoryImpl(IdGenerator idGenerator) {
+    public RepositoryImpl(IdGenerator idGenerator, DataLoader dataLoader) {
         this.idGenerator = idGenerator;
+        this.dataLoader = dataLoader;
+        storageMap = dataLoader.load();
     }
-
-    private final Map<Integer, String> storageMap = new ConcurrentHashMap<>();
 
     @Override
     public Integer create(String data) {
         var id = idGenerator.nextId();
         storageMap.put(id, data);
+        dataLoader.save(storageMap);
         return id;
     }
 
@@ -34,11 +37,14 @@ public final class RepositoryImpl implements Repository<Integer, String> {
     @Override
     public void update(Integer id, String data) {
        storageMap.put(id, data);
+        dataLoader.save(storageMap);
     }
 
     @Override
     public boolean delete(Integer id) {
-        return storageMap.remove(id) != null;
+        var isDeleted = storageMap.remove(id);
+        dataLoader.save(storageMap);
+        return isDeleted !=null;
     }
 
     @Override

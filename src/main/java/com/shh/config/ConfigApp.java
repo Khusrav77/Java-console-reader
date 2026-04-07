@@ -2,6 +2,8 @@ package com.shh.config;
 
 import com.shh.dispacher.CommandDispatcher;
 import com.shh.repository.Repository;
+import com.shh.service.DataLoader;
+import com.shh.service.DataLoaderImpl;
 import com.shh.service.MessageService;
 import com.shh.service.MessageServiceImpl;
 import com.shh.util.IdGenerator;
@@ -16,9 +18,9 @@ import java.util.Map;
 
 public final class ConfigApp {
 
-    public CommandDispatcher dispatcher(Repository<Integer, String> repository){
+    public CommandDispatcher dispatcher(){
 
-        MessageService messageService = new MessageServiceImpl(repository);
+        MessageService messageService = new MessageServiceImpl(repository());
 
         CommandHandler createHandler = new  CreateHandler(messageService);
         CommandHandler getHandler = new GetHandler(messageService);
@@ -37,16 +39,17 @@ public final class ConfigApp {
         return new CommandDispatcher(handlers);
     }
 
-    public Repository repository(Map<Integer,String> map) {
-        IdGenerator idGenerator = new IdGeneratorImpl();
-        return new RepositoryImpl(idGenerator);
-    }
-
     public Parser parser() {
         return new Parser(validator());
     }
 
-    private  Validator validator() {
+    // =========== PRIVATE METHODS ============== //
+    private Validator validator() {
         return new Validator();
+    }
+    private IdGenerator idGenerator() {return new IdGeneratorImpl();}
+    private DataLoader loader() {return  new DataLoaderImpl();}
+    private Repository repository() {
+        return new RepositoryImpl(idGenerator(), loader());
     }
 }
