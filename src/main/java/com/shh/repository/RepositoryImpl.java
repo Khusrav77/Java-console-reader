@@ -1,6 +1,8 @@
 package com.shh.repository;
 import com.shh.service.DataLoader;
 import com.shh.util.IdGenerator;
+import com.shh.util.IdGeneratorImpl;
+
 import java.util.*;
 
 
@@ -10,10 +12,16 @@ public final class RepositoryImpl implements Repository<Integer, String> {
     private final DataLoader dataLoader;
     private  Map<Integer, String> storageMap;
 
-    public RepositoryImpl(IdGenerator idGenerator, DataLoader dataLoader) {
-        this.idGenerator = idGenerator;
+    public RepositoryImpl(DataLoader dataLoader) {
         this.dataLoader = dataLoader;
         this.storageMap = dataLoader.load();
+
+        int maxId = storageMap.keySet()
+                .stream()
+                .max(Integer::compareTo)
+                .orElse(0);
+
+        this.idGenerator = new IdGeneratorImpl(maxId);
     }
 
     @Override

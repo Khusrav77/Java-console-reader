@@ -18,6 +18,7 @@ public class DataLoaderImpl implements DataLoader{
 
         try(BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
             String line;
+
             while ((line = reader.readLine())!= null){
 
                 String [] parts = line.split(":", 2);
@@ -27,7 +28,6 @@ public class DataLoaderImpl implements DataLoader{
                 var value = parts[1];
 
                 data.put(id, value);
-
             }
 
         } catch (IOException e) {

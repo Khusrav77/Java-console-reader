@@ -6,8 +6,6 @@ import com.shh.service.DataLoader;
 import com.shh.service.DataLoaderImpl;
 import com.shh.service.MessageService;
 import com.shh.service.MessageServiceImpl;
-import com.shh.util.IdGenerator;
-import com.shh.util.IdGeneratorImpl;
 import com.shh.util.Parser;
 import com.shh.util.Validator;
 import com.shh.handler.*;
@@ -47,9 +45,8 @@ public final class ConfigApp {
     private Validator validator() {
         return new Validator();
     }
-    private IdGenerator idGenerator() {return new IdGeneratorImpl();}
     private DataLoader loader() {return  new DataLoaderImpl();}
     private Repository repository() {
-        return new RepositoryImpl(idGenerator(), loader());
+        return new RepositoryImpl(loader());
     }
 }
