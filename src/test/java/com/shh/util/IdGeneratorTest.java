@@ -11,7 +11,7 @@ public class IdGeneratorTest {
     @Test
     void nextIdTest() {
         // given
-        IdGenerator idGenerator = new IdGeneratorImpl();
+        IdGenerator idGenerator = new IdGeneratorImpl(0);
 
         // when
         int first = idGenerator.nextId();
