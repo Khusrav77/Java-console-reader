@@ -6,6 +6,8 @@ import com.shh.service.DataLoader;
 import com.shh.service.DataLoaderImpl;
 import com.shh.service.MessageService;
 import com.shh.service.MessageServiceImpl;
+import com.shh.util.IdGenerator;
+import com.shh.util.IdGeneratorImpl;
 import com.shh.util.Parser;
 import com.shh.util.Validator;
 import com.shh.handler.*;
@@ -16,9 +18,26 @@ import java.util.Map;
 
 public final class ConfigApp {
 
+    private final DataLoader dataLoader = new DataLoaderImpl();
+    private final Map<Integer, String> storage;
+    private final Repository repository;
+    private final IdGenerator idGenerator;
+
+    public ConfigApp() {
+        this.storage = dataLoader.load();
+        int maxId = storage.keySet()
+                .stream()
+                .max(Integer::compareTo)
+                .orElse(0);
+        this.idGenerator = new IdGeneratorImpl(maxId);
+        this.repository = new RepositoryImpl(idGenerator, storage);
+    }
+
+
+
     public CommandDispatcher dispatcher(){
 
-        MessageService messageService = new MessageServiceImpl(repository());
+        MessageService messageService = new MessageServiceImpl(repository);
 
         CommandHandler createHandler = new  CreateHandler(messageService);
         CommandHandler getHandler = new GetHandler(messageService);
@@ -38,15 +57,11 @@ public final class ConfigApp {
     }
 
     public Parser parser() {
-        return new Parser(validator());
+        return new Parser(new Validator());
     }
 
-    // =========== PRIVATE METHODS ============== //
-    private Validator validator() {
-        return new Validator();
+    public void saveData(){
+        dataLoader.save(storage);
     }
-    private DataLoader loader() {return  new DataLoaderImpl();}
-    private Repository repository() {
-        return new RepositoryImpl(loader());
-    }
+
 }
