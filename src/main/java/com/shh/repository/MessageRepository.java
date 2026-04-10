@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
 
-public interface Repository<ID, T> {
+public interface MessageRepository<ID, T> {
 
     Integer create(T data);
     Optional<T> get(ID id);

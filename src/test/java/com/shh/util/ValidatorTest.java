@@ -2,6 +2,7 @@ package com.shh.util;
 
 
 import com.shh.model.CommandType;
+import com.shh.service.Validator;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -1,6 +1,8 @@
 package com.shh.util;
 
 
+import com.shh.service.IdGenerator;
+import com.shh.service.IdGeneratorImpl;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

@@ -1,4 +1,4 @@
-package com.shh.util;
+package com.shh.service;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

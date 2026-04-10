@@ -1,10 +1,9 @@
-package com.shh.util;
+package com.shh.service;
 
 import com.shh.model.CommandType;
 
 public final class Validator {
 
-    // ============ VALIDATE METHODE ============= //
     public CommandType validate(String  input) {
         if (input == null || input.isBlank()) {
             throw new IllegalArgumentException("Command data cannot be null or empty");
@@ -12,7 +11,6 @@ public final class Validator {
 
         input = input.trim();
         String[] data = input.split(" ", 3);
-
         CommandType commandType;
 
         try {
@@ -38,7 +36,6 @@ public final class Validator {
         return commandType;
     }
 
-    // ============ PRIVATE METHODE ============= //
     private void validateCreate(String [] data) {
        checkLength(data, 2, CommandType.CREATE);
 

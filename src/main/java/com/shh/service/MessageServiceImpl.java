@@ -1,44 +1,44 @@
 package com.shh.service;
 
-import com.shh.repository.Repository;
+import com.shh.repository.MessageRepository;
 import java.util.Collection;
 
 
 public class MessageServiceImpl implements MessageService {
 
-    private final Repository<Integer,String> repository;
+    private final MessageRepository<Integer,String> messageRepository;
 
-    public MessageServiceImpl(Repository<Integer, String> repository) {
-        this.repository = repository;
+    public MessageServiceImpl(MessageRepository<Integer, String> messageRepository) {
+        this.messageRepository = messageRepository;
     }
 
     @Override
     public Integer create(String data) {
-       return repository.create(data);
+       return messageRepository.create(data);
     }
 
     @Override
     public String get(Integer id) {
-        return repository.get(id).orElseThrow(
+        return messageRepository.get(id).orElseThrow(
                 ()-> new IllegalArgumentException("Message not found"));
     }
 
     @Override
     public Collection<String> getAll() {
-        return repository.getAll();
+        return messageRepository.getAll();
     }
 
     @Override
     public String update(Integer id, String data) {
-        repository.get(id).orElseThrow(
+        messageRepository.get(id).orElseThrow(
                 ()-> new IllegalArgumentException("Message not found"));
-        repository.update(id, data);
+        messageRepository.update(id, data);
         return "Message with id " + id + " was updated";
     }
 
     @Override
     public String delete(Integer id) {
-        boolean deleted = repository.delete(id);
+        boolean deleted = messageRepository.delete(id);
         if (!deleted) {
                 new IllegalArgumentException("Message not found");
         }

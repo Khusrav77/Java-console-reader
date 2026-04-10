@@ -1,23 +1,23 @@
 package com.shh.config;
 
 import com.shh.dispacher.CommandDispatcher;
-import com.shh.repository.Repository;
+import com.shh.repository.MessageRepository;
 import com.shh.service.DataLoader;
 import com.shh.service.DataLoaderImpl;
 import com.shh.service.MessageService;
 import com.shh.service.MessageServiceImpl;
-import com.shh.util.Parser;
-import com.shh.util.Validator;
+import com.shh.service.Parser;
+import com.shh.service.Validator;
 import com.shh.handler.*;
 import com.shh.model.CommandType;
-import com.shh.repository.RepositoryImpl;
+import com.shh.repository.MessageRepositoryImpl;
 import java.util.Map;
 
 public final class ConfigApp {
 
-    public CommandDispatcher dispatcher(Repository repository){
+    public CommandDispatcher dispatcher(MessageRepository messageRepository){
 
-        MessageService messageService = new MessageServiceImpl(repository);
+        MessageService messageService = new MessageServiceImpl(messageRepository);
 
         CommandHandler createHandler = new  CreateHandler(messageService);
         CommandHandler getHandler = new GetHandler(messageService);
@@ -42,6 +42,6 @@ public final class ConfigApp {
 
     public DataLoader dataLoader() {return new DataLoaderImpl();}
 
-    public Repository repository(Map<Integer, String> storage) {return new RepositoryImpl(storage);}
+    public MessageRepository repository(Map<Integer, String> storage) {return new MessageRepositoryImpl(storage);}
 
 }

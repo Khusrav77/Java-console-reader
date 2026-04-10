@@ -1,4 +1,4 @@
-package com.shh.util;
+package com.shh.service;
 
 import com.shh.model.Command;
 import com.shh.model.CommandType;
@@ -11,7 +11,6 @@ public  class Parser {
         this.validator = validator;
     }
 
-    // ============ PARSER METHODE ============= //
     public Command parse (String input) {
 
         CommandType commandType = validator.validate(input);
@@ -32,7 +31,6 @@ public  class Parser {
 
     }
 
-    // ============ PRIVATE METHODE ============= //
     private Command parseCreate(String[] data){
         var value = data[1];
         return new Command(CommandType.CREATE, null, value);

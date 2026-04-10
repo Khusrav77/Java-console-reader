@@ -1,16 +1,16 @@
 package com.shh.repository;
-import com.shh.util.IdGenerator;
-import com.shh.util.IdGeneratorImpl;
+import com.shh.service.IdGenerator;
+import com.shh.service.IdGeneratorImpl;
 
 import java.util.*;
 
 
-public final class RepositoryImpl implements Repository<Integer, String> {
+public final class MessageRepositoryImpl implements MessageRepository<Integer, String> {
 
     private final IdGenerator idGenerator;
     private final Map<Integer, String> storage;
 
-    public RepositoryImpl(Map<Integer, String> map) {
+    public MessageRepositoryImpl(Map<Integer, String> map) {
         this.storage = new HashMap<>(map);
         int maxId = storage.keySet()
                 .stream()
