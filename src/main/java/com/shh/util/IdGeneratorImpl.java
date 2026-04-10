@@ -10,8 +10,6 @@ public class IdGeneratorImpl implements IdGenerator{
         this.counter = new AtomicInteger(initialValue);
     }
 
-
-
     @Override
     public Integer nextId() {
         return counter.incrementAndGet();

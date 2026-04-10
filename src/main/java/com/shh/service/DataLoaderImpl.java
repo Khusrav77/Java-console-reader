@@ -47,6 +47,5 @@ public class DataLoaderImpl implements DataLoader{
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 }

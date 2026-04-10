@@ -8,7 +8,7 @@ import java.util.*;
 public final class RepositoryImpl implements Repository<Integer, String> {
 
     private final IdGenerator idGenerator;
-    private  Map<Integer, String> storage;
+    private final Map<Integer, String> storage;
 
     public RepositoryImpl(Map<Integer, String> map) {
         this.storage = new HashMap<>(map);
