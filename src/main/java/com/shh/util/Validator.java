@@ -45,25 +45,20 @@ public final class Validator {
     }
 
     private void validateGet(String [] data) {
-
         if (data.length != 1) {
             checkLength(data, 2, CommandType.GET);
             checkId(data[1]);
         }
-
     }
 
     private void validateUpdate(String [] data) {
-
         checkLength(data, 3, CommandType.UPDATE);
         checkId(data[1]);
     }
 
     private void validateDelete(String [] data) {
-
         checkLength(data, 2, CommandType.DELETE);
         checkId(data[1]);
-
     }
 
     private void checkLength(String[] data, int expected, CommandType command) {

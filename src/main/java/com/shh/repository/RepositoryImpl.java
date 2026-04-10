@@ -1,44 +1,54 @@
 package com.shh.repository;
 import com.shh.util.IdGenerator;
+import com.shh.util.IdGeneratorImpl;
+
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 
 
 public final class RepositoryImpl implements Repository<Integer, String> {
 
     private final IdGenerator idGenerator;
+    private final Map<Integer, String> storage;
 
-    public RepositoryImpl(IdGenerator idGenerator) {
-        this.idGenerator = idGenerator;
+    public RepositoryImpl(Map<Integer, String> map) {
+        this.storage = new HashMap<>(map);
+        int maxId = storage.keySet()
+                .stream()
+                .max(Integer::compareTo)
+                .orElse(0);
+        this.idGenerator = new IdGeneratorImpl(maxId);
     }
-
-    private final Map<Integer, String> storageMap = new ConcurrentHashMap<>();
 
     @Override
     public Integer create(String data) {
         var id = idGenerator.nextId();
-        storageMap.put(id, data);
+        storage.put(id, data);
         return id;
     }
 
     @Override
     public Optional<String> get(Integer id) {
-        return Optional.ofNullable(storageMap.get(id));
+        return Optional.ofNullable(storage.get(id));
     }
 
     @Override
     public Collection<String> getAll () {
-        return new ArrayList<>(storageMap.values());
+        return new ArrayList<>(storage.values());
     }
 
     @Override
-    public boolean update(Integer id, String data) {
-       storageMap.put(id, data);
-        return true;
+    public void update(Integer id, String data) {
+       storage.put(id, data);
     }
 
     @Override
     public boolean delete(Integer id) {
-        return storageMap.remove(id) != null;
+        var isDeleted = storage.remove(id);
+        return isDeleted !=null;
+    }
+
+    @Override
+    public Map<Integer, String> getMap() {
+        return new HashMap<>(storage);
     }
 }

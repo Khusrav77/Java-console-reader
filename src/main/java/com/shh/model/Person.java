@@ -1,7 +1,7 @@
 package com.shh.model;
 
 public final class Person {
-
+   static boolean b;
     static int count;
     private String name;
     private Integer age;
@@ -26,14 +26,34 @@ public final class Person {
 
     public static void main(String[] args) {
 
-        Person person = new Person();
+//        Person person = new Person();
+//
+//        Person person1 = new Person();
+//
+//        System.out.println(person.count);
+//        System.out.println(Person.count++);
+//        System.out.println(++Person.count);
+//        System.out.println(Person.count);
 
-        Person person1 = new Person();
+        int x = 1;
+        System.out.println(x++); // 2
+        System.out.println(++x); // 2
+        System.out.println(x); // 3
 
-        System.out.println(person.count);
-        System.out.println(Person.count++);
-        System.out.println(++Person.count);
-        System.out.println(Person.count);
+
+        char s;
+
+        byte by;
+        long l; // 0
+        float f; //0.0
+        double d;
+        System.out.println(b); // tru ,
+        System.out.println();
+        System.out.println(b);
+        System.out.println(b);
+        System.out.println(b);
+        System.out.println(b);
+        System.out.println(b);
 
     }
 

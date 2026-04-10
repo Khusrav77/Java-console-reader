@@ -1,15 +1,12 @@
 package com.shh.service;
 
 import com.shh.repository.Repository;
-import com.shh.util.IdGenerator;
-
-
 import java.util.Collection;
 
 
 public class MessageServiceImpl implements MessageService {
 
-    private final   Repository<Integer,String> repository;
+    private final Repository<Integer,String> repository;
 
     public MessageServiceImpl(Repository<Integer, String> repository) {
         this.repository = repository;
