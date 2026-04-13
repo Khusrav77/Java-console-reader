@@ -1,6 +1,7 @@
 package com.shh.config;
 
 import com.shh.dispacher.CommandDispatcher;
+import com.shh.model.Person;
 import com.shh.repository.MessageRepository;
 import com.shh.service.DataLoader;
 import com.shh.service.DataLoaderImpl;
@@ -42,6 +43,8 @@ public final class ConfigApp {
 
     public DataLoader dataLoader() {return new DataLoaderImpl();}
 
-    public MessageRepository repository(Map<Integer, String> storage) {return new MessageRepositoryImpl(storage);}
+    public MessageRepository repository(Map<Integer, Person> storage) {
+        return new MessageRepositoryImpl(storage);
+    }
 
 }

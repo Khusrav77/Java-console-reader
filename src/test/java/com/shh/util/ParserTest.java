@@ -1,5 +1,6 @@
 package com.shh.util;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.shh.model.Command;
 import com.shh.model.CommandType;
 import com.shh.service.Parser;
@@ -16,7 +17,7 @@ public class ParserTest {
 
     // ========== CREATE TEST ===============
     @Test
-    public void createTest() {
+    public void createTest() throws JsonProcessingException {
        // given
        String input = "Create hello";
 
@@ -32,7 +33,7 @@ public class ParserTest {
 
     // ========== GET TEST ===============
     @Test
-    public void getTest(){
+    public void getTest() throws JsonProcessingException {
         // given
         String input = "Get 5";
 
@@ -48,7 +49,7 @@ public class ParserTest {
 
     // ========== GET ALL TEST ===============
     @Test
-    void getAllTest() {
+    void getAllTest() throws JsonProcessingException {
         // given
         String input = "Get";
 
@@ -63,7 +64,7 @@ public class ParserTest {
 
     // ========== UPDATE TEST ===============
     @Test
-    public void updateTest(){
+    public void updateTest() throws JsonProcessingException {
         // given
         String input = "Update 5 Hello";
 
@@ -79,7 +80,7 @@ public class ParserTest {
 
     // ========== DELETE TEST ===============
     @Test
-    public void deleteTest() {
+    public void deleteTest() throws JsonProcessingException {
         // given
         String input = "Delete 5";
 

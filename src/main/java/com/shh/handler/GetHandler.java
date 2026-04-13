@@ -16,6 +16,6 @@ public final class GetHandler implements CommandHandler{
     @Override
     public OutputMessage handle(Command command) {
         var result = messageService.get(command.getId());
-        return new OutputMessage(result);
+        return new OutputMessage(result.toString());
     }
 }

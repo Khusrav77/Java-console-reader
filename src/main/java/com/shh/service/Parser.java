@@ -1,7 +1,10 @@
 package com.shh.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shh.model.Command;
 import com.shh.model.CommandType;
+import com.shh.model.Person;
 
 public  class Parser {
 
@@ -11,7 +14,7 @@ public  class Parser {
         this.validator = validator;
     }
 
-    public Command parse (String input) {
+    public Command parse (String input) throws JsonProcessingException {
 
         CommandType commandType = validator.validate(input);
         String[] data = input.split(" ", 3);
@@ -31,9 +34,11 @@ public  class Parser {
 
     }
 
-    private Command parseCreate(String[] data){
+    private Command parseCreate(String[] data) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
         var value = data[1];
-        return new Command(CommandType.CREATE, null, value);
+        Person person = objectMapper.readValue(value, Person.class);
+        return new Command(CommandType.CREATE, null, person);
     }
 
     private Command parseGet(String[] data){
@@ -46,10 +51,12 @@ public  class Parser {
 
     }
 
-    private Command parseUpdate(String[] data){
+    private Command parseUpdate(String[] data) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
         var id = Integer.parseInt(data[1]);
         var newValue = data[2];
-        return new Command(CommandType.UPDATE, id, newValue);
+        Person person = objectMapper.readValue(newValue, Person.class);
+        return new Command(CommandType.UPDATE, id, person);
     }
 
     private Command parseDelete(String[] data){

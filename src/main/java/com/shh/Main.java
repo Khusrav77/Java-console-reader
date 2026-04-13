@@ -7,6 +7,9 @@ import com.shh.model.OutputMessage;
 import com.shh.repository.MessageRepository;
 import com.shh.service.DataLoader;
 import com.shh.service.Parser;
+
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Scanner;
 
 
@@ -16,7 +19,7 @@ public class Main {
         ConfigApp configApp = new ConfigApp();
         DataLoader dataLoader = configApp.dataLoader();
         var initialData = dataLoader.load();
-        MessageRepository messageRepository = configApp.repository(initialData);
+        MessageRepository messageRepository = configApp.repository(Collections.EMPTY_MAP);
         Parser parser = configApp.parser();
         CommandDispatcher dispatcher = configApp.dispatcher(messageRepository);
 

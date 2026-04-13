@@ -4,9 +4,9 @@ public final class Command {
 
     private final CommandType type;
     private final Integer id;
-    private final String value;
+    private final Person value;
 
-    public Command(CommandType type, Integer id, String value) {
+    public Command(CommandType type, Integer id, Person value) {
         this.type = type;
         this.id = id;
         this.value = value;
@@ -18,7 +18,7 @@ public final class Command {
     public Integer getId() {
         return id;
     }
-    public String getValue() {
+    public Person getValue() {
         return value;
     }
 
