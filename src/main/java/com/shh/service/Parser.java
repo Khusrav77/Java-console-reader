@@ -36,8 +36,7 @@ public  class Parser {
 
     private Command parseCreate(String[] data) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
-        var value = data[1];
-        Person person = objectMapper.readValue(value, Person.class);
+        Person person = objectMapper.readValue(data[1], Person.class);
         return new Command(CommandType.CREATE, null, person);
     }
 
@@ -45,10 +44,8 @@ public  class Parser {
         if (data.length == 1) {
             return new Command(CommandType.GET_ALL, null, null);
         }
-
         var id = Integer.parseInt(data[1]);
         return new Command(CommandType.GET, id, null);
-
     }
 
     private Command parseUpdate(String[] data) throws JsonProcessingException {
@@ -63,5 +60,4 @@ public  class Parser {
         var id = Integer.parseInt(data[1]);
         return new Command(CommandType.DELETE, id, null);
     }
-
 }

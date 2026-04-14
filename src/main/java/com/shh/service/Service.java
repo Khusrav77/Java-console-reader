@@ -4,7 +4,7 @@ import com.shh.model.Person;
 
 import java.util.Collection;
 
-public interface MessageService {
+public interface Service {
 
     Integer create(Person data);
     Person get(Integer id);

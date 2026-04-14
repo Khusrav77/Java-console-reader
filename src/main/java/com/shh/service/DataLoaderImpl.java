@@ -1,48 +1,42 @@
 package com.shh.service;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.shh.model.Person;
+
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
 public class DataLoaderImpl implements DataLoader{
 
-    private static String FILE_NAME = "data.txt";
-    private static String FILE_PATH = System.getProperty("user.home") + File.separator + FILE_NAME;
+    private static final String FILE_NAME = "person.json";
+    private static final String FILE_PATH = System.getProperty("user.home") + File.separator + FILE_NAME;
+    private final ObjectMapper mapper = new ObjectMapper();
 
     @Override
-    public Map<Integer, String> load() {
-        Map<Integer, String> map = new HashMap<>();
+    public Map<Integer, Person> load() {
 
         File file = new File(FILE_PATH);
         if (!file.exists()) {
-            return map;
+            return new HashMap<>();
         }
 
-        try(BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
-            String line;
-
-            while ((line = reader.readLine())!= null){
-                String [] parts = line.split(":", 2);
-                if (parts.length != 2) continue;
-
-                var id = Integer.parseInt(parts[0]);
-                var value = parts[1];
-                map.put(id, value);
-            }
+        try {
+           return mapper.readValue(
+                   file, new TypeReference<Map<Integer, Person>>(){});
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return map;
+        return new HashMap<>();
     }
 
     @Override
-    public void save(Map<Integer, String> map) {
+    public void save(Map<Integer, Person> persons) {
 
-        try(FileWriter writer = new FileWriter(FILE_PATH)) {
-            for (Map.Entry<Integer,String> entry : map.entrySet()) {
-                writer.write(entry.getKey() + ":" + entry.getValue() + "\n");
-            }
+        try {
+            mapper.writeValue(new File(FILE_PATH), persons);
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -47,7 +47,6 @@ public final class Validator {
     private void validateCreate(String [] data) {
        checkLength(data, 2, CommandType.CREATE);
        isValidJson(data[1]);
-
     }
 
     private void validateGet(String [] data) {
@@ -78,7 +77,6 @@ public final class Validator {
         if (!isInt(id)) {
             throw new IllegalArgumentException("ID must be a number");
         }
-
     }
 
     private boolean isInt(String id) {

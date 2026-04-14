@@ -4,12 +4,9 @@ import com.shh.config.ConfigApp;
 import com.shh.dispacher.CommandDispatcher;
 import com.shh.model.Command;
 import com.shh.model.OutputMessage;
-import com.shh.repository.MessageRepository;
+import com.shh.repository.Repository;
 import com.shh.service.DataLoader;
 import com.shh.service.Parser;
-
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Scanner;
 
 
@@ -19,9 +16,9 @@ public class Main {
         ConfigApp configApp = new ConfigApp();
         DataLoader dataLoader = configApp.dataLoader();
         var initialData = dataLoader.load();
-        MessageRepository messageRepository = configApp.repository(Collections.EMPTY_MAP);
+        Repository repository = configApp.repository(initialData);
         Parser parser = configApp.parser();
-        CommandDispatcher dispatcher = configApp.dispatcher(messageRepository);
+        CommandDispatcher dispatcher = configApp.dispatcher(repository);
 
         try(Scanner scanner = new Scanner(System.in)) {
             while (scanner.hasNext()) {
@@ -38,7 +35,7 @@ public class Main {
                 }
             }
         }
-        dataLoader.save(messageRepository.getMap());
+        dataLoader.save(repository.getMap());
     }
 
 }

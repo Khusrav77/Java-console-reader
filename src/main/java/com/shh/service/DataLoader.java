@@ -1,10 +1,11 @@
 package com.shh.service;
 
+import com.shh.model.Person;
+
 import java.util.Map;
 
 public interface DataLoader {
 
-    Map<Integer, String> load();
-    void save(Map<Integer, String> messages);
-
+    Map<Integer, Person> load();
+    void save(Map<Integer, Person> persons);
 }

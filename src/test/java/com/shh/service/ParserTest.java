@@ -1,10 +1,8 @@
-package com.shh.util;
+package com.shh.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.shh.model.Command;
 import com.shh.model.CommandType;
-import com.shh.service.Parser;
-import com.shh.service.Validator;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

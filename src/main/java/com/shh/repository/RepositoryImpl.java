@@ -6,12 +6,12 @@ import com.shh.service.IdGeneratorImpl;
 import java.util.*;
 
 
-public final class MessageRepositoryImpl implements MessageRepository<Integer, Person> {
+public final class RepositoryImpl implements Repository<Integer, Person> {
 
     private final IdGenerator idGenerator;
     private final Map<Integer, Person> storage;
 
-    public MessageRepositoryImpl(Map<Integer, Person> map) {
+    public RepositoryImpl(Map<Integer, Person> map) {
         this.storage = new HashMap<>(map);
         int maxId = storage.keySet()
                 .stream()
