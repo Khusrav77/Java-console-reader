@@ -14,7 +14,7 @@ public class ValidatorTest {
     @Test
     public void createTest() {
         // given
-        String  input = "Create Hello";
+        String  input = "Create {\"name\":\"Ваня\",\"age\":18}";
 
         // when
         CommandType result = validator.validate(input);

@@ -6,6 +6,7 @@ import com.shh.model.Command;
 import com.shh.model.OutputMessage;
 import com.shh.repository.Repository;
 import com.shh.service.DataLoader;
+import com.shh.service.Mapper;
 import com.shh.service.Parser;
 import java.util.Scanner;
 
@@ -18,7 +19,8 @@ public class Main {
         var initialData = dataLoader.load();
         Repository repository = configApp.repository(initialData);
         Parser parser = configApp.parser();
-        CommandDispatcher dispatcher = configApp.dispatcher(repository);
+        Mapper mapper = configApp.mapper();
+        CommandDispatcher dispatcher = configApp.dispatcher(repository, mapper);
 
         try(Scanner scanner = new Scanner(System.in)) {
             while (scanner.hasNext()) {
