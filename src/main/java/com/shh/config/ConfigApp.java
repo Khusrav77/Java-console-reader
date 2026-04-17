@@ -12,6 +12,7 @@ import java.util.Map;
 
 public final class ConfigApp {
 
+
     public CommandDispatcher dispatcher(Repository repository, Mapper mapper){
 
         Service service = new ServiceImpl(repository);
@@ -32,6 +33,7 @@ public final class ConfigApp {
 
         return new CommandDispatcher(handlers);
     }
+
 
     public Parser parser() {return new Parser(new Validator());}
     public Mapper mapper() {return new MapperImpl(new ObjectMapper());}
