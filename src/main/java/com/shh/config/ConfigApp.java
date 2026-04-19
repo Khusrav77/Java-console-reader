@@ -13,10 +13,7 @@ import java.util.Map;
 public final class ConfigApp {
 
 
-    public CommandDispatcher dispatcher(Repository repository, Mapper mapper){
-
-        Service service = new ServiceImpl(repository);
-
+    public CommandDispatcher dispatcher(Service service, ObjectMapper mapper){
         CommandHandler createHandler = new  CreateHandler(service);
         CommandHandler getHandler = new GetHandler(service, mapper);
         CommandHandler getAllHandler = new GetAllHandler(service, mapper);
@@ -34,10 +31,11 @@ public final class ConfigApp {
         return new CommandDispatcher(handlers);
     }
 
-
-    public Parser parser() {return new Parser(new Validator());}
-    public Mapper mapper() {return new MapperImpl(new ObjectMapper());}
-    public DataLoader dataLoader() {return new DataLoaderImpl(mapper());}
+    public Validator validator() {return new Validator();}
+    public Parser parser(Validator validator) {return new Parser(validator);}
+    public ObjectMapper mapper() {return new ObjectMapper();}
+    public DataLoader dataLoader(ObjectMapper mapper) {return new DataLoaderImpl(mapper);}
+    public Service service(Repository repository) {return new ServiceImpl(repository);}
     public Repository repository(Map<Integer, Person> storage) {
         return new RepositoryImpl(storage);
     }

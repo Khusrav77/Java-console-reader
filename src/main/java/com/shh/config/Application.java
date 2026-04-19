@@ -1,31 +1,35 @@
 package com.shh.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shh.dispacher.CommandDispatcher;
 import com.shh.model.Command;
 import com.shh.model.OutputMessage;
 import com.shh.repository.Repository;
 import com.shh.service.DataLoader;
-import com.shh.service.Mapper;
 import com.shh.service.Parser;
+import com.shh.service.Service;
+import com.shh.service.Validator;
 
 import java.util.Scanner;
 
 public class Application {
 
     private final ConfigApp configApp;
+    private final DataLoader dataLoader;
+    private final Repository repository;
     private final CommandDispatcher dispatcher;
     private final Parser parser;
-    private final DataLoader dataLoader;
-    private final  Repository repository;
 
     public Application() {
         this.configApp = new ConfigApp();
-        this.dataLoader = configApp.dataLoader();
+        ObjectMapper mapper = configApp.mapper();
+        this.dataLoader = configApp.dataLoader(mapper);
         var initialData = dataLoader.load();
         this.repository = configApp.repository(initialData);
-        Mapper mapper = configApp.mapper();
-        this.dispatcher = configApp.dispatcher(repository, mapper);
-        this.parser = configApp.parser();
+        Service service = configApp.service(repository);
+        this.dispatcher = configApp.dispatcher(service, mapper);
+        Validator validator = configApp.validator();
+        this.parser = configApp.parser(validator);
     }
 
     public void start() {
@@ -46,5 +50,4 @@ public class Application {
         }
         dataLoader.save(repository.getMap());
     }
-
 }
