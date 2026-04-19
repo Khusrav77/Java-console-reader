@@ -13,9 +13,9 @@ public class DataLoaderImpl implements DataLoader{
 
     private static final String FILE_NAME = "person.txt";
     private static final String FILE_PATH = System.getProperty("user.home") + File.separator + FILE_NAME;
-    private final Mapper mapper;
+    private final ObjectMapper mapper;
 
-    public DataLoaderImpl(Mapper mapper){this.mapper = mapper;}
+    public DataLoaderImpl(ObjectMapper mapper){this.mapper = mapper;}
 
     @Override public Map<Integer, Person> load() {
         Map<Integer, Person> map = new HashMap<>();
@@ -28,7 +28,7 @@ public class DataLoaderImpl implements DataLoader{
                 String [] parts = line.split(":", 2);
                 if (parts.length != 2) continue;
                 var id = Integer.parseInt(parts[0]);
-                Person person = mapper.jsonToObject(parts[1]);
+                Person person = mapper.readValue(parts[1], Person.class);
                 map.put(id, person);
             }
         } catch (IOException e) {
@@ -41,7 +41,7 @@ public class DataLoaderImpl implements DataLoader{
     public void save(Map<Integer, Person> map) {
         try(FileWriter writer = new FileWriter(FILE_PATH)) {
             for (Map.Entry<Integer,Person> entry : map.entrySet()) {
-                String json = mapper.objectToJson(entry.getValue());
+                String json = mapper.writeValueAsString(entry.getValue());
                 writer.write(entry.getKey() + ":" + json + "\n");
             }
 
