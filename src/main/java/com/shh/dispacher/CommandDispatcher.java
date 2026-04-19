@@ -1,5 +1,6 @@
 package com.shh.dispacher;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.shh.handler.CommandHandler;
 import com.shh.model.Command;
 import com.shh.model.CommandType;
@@ -15,7 +16,7 @@ public final class CommandDispatcher {
         this.handlers = handlers;
     }
 
-    public OutputMessage handleCommand(Command command) {
+    public OutputMessage handleCommand(Command command) throws JsonProcessingException {
         CommandHandler handler = handlers.get(command.getType());
         if (handler == null) {
             throw new  IllegalArgumentException(

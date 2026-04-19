@@ -1,16 +1,17 @@
 package com.shh.repository;
+import com.shh.model.Person;
 import com.shh.service.IdGenerator;
 import com.shh.service.IdGeneratorImpl;
 
 import java.util.*;
 
 
-public final class MessageRepositoryImpl implements MessageRepository<Integer, String> {
+public final class RepositoryImpl implements Repository<Integer, Person> {
 
     private final IdGenerator idGenerator;
-    private final Map<Integer, String> storage;
+    private final Map<Integer, Person> storage;
 
-    public MessageRepositoryImpl(Map<Integer, String> map) {
+    public RepositoryImpl(Map<Integer, Person> map) {
         this.storage = new HashMap<>(map);
         int maxId = storage.keySet()
                 .stream()
@@ -20,24 +21,24 @@ public final class MessageRepositoryImpl implements MessageRepository<Integer, S
     }
 
     @Override
-    public Integer create(String data) {
+    public Integer create(Person data) {
         var id = idGenerator.nextId();
         storage.put(id, data);
         return id;
     }
 
     @Override
-    public Optional<String> get(Integer id) {
+    public Optional<Person> get(Integer id) {
         return Optional.ofNullable(storage.get(id));
     }
 
     @Override
-    public Collection<String> getAll () {
+    public Collection<Person> getAll () {
         return new ArrayList<>(storage.values());
     }
 
     @Override
-    public void update(Integer id, String data) {
+    public void update(Integer id, Person data) {
        storage.put(id, data);
     }
 
@@ -48,7 +49,7 @@ public final class MessageRepositoryImpl implements MessageRepository<Integer, S
     }
 
     @Override
-    public Map<Integer, String> getMap() {
+    public Map<Integer, Person> getMap() {
         return new HashMap<>(storage);
     }
 }

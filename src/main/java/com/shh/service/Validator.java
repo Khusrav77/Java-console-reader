@@ -1,8 +1,16 @@
 package com.shh.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shh.model.CommandType;
+import com.shh.model.Person;
 
 public final class Validator {
+    //CREATE {"name":"Ваня","age":18}
+    //UPDATE 3 {"name":"Петя","age":16}
+    //DELETE 2
+    //GET 1
+    //GET
 
     public CommandType validate(String  input) {
         if (input == null || input.isBlank()) {
@@ -38,7 +46,7 @@ public final class Validator {
 
     private void validateCreate(String [] data) {
        checkLength(data, 2, CommandType.CREATE);
-
+       isValidJson(data[1]);
     }
 
     private void validateGet(String [] data) {
@@ -51,6 +59,7 @@ public final class Validator {
     private void validateUpdate(String [] data) {
         checkLength(data, 3, CommandType.UPDATE);
         checkId(data[1]);
+        isValidJson(data[2]);
     }
 
     private void validateDelete(String [] data) {
@@ -68,7 +77,6 @@ public final class Validator {
         if (!isInt(id)) {
             throw new IllegalArgumentException("ID must be a number");
         }
-
     }
 
     private boolean isInt(String id) {
@@ -76,6 +84,16 @@ public final class Validator {
             Integer.parseInt(id);
             return true;
         } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private boolean isValidJson(String json) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.readValue(json, Person.class);
+            return true;
+        } catch (JsonProcessingException e) {
             return false;
         }
     }

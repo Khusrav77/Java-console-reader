@@ -1,35 +1,36 @@
 package com.shh.service;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.shh.model.Person;
+
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class DataLoaderImpl implements DataLoader{
 
-    private static String FILE_NAME = "data.txt";
-    private static String FILE_PATH = System.getProperty("user.home") + File.separator + FILE_NAME;
+    private static final String FILE_NAME = "person.txt";
+    private static final String FILE_PATH = System.getProperty("user.home") + File.separator + FILE_NAME;
+    private final Mapper mapper;
 
-    @Override
-    public Map<Integer, String> load() {
-        Map<Integer, String> map = new HashMap<>();
+    public DataLoaderImpl(Mapper mapper){this.mapper = mapper;}
 
+    @Override public Map<Integer, Person> load() {
+        Map<Integer, Person> map = new HashMap<>();
         File file = new File(FILE_PATH);
-        if (!file.exists()) {
-            return map;
-        }
+        if (!file.exists()) { return map; }
 
         try(BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
             String line;
-
-            while ((line = reader.readLine())!= null){
+            while ((line = reader.readLine())!= null) {
                 String [] parts = line.split(":", 2);
                 if (parts.length != 2) continue;
-
                 var id = Integer.parseInt(parts[0]);
-                var value = parts[1];
-                map.put(id, value);
+                Person person = mapper.jsonToObject(parts[1]);
+                map.put(id, person);
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -37,11 +38,11 @@ public class DataLoaderImpl implements DataLoader{
     }
 
     @Override
-    public void save(Map<Integer, String> map) {
-
+    public void save(Map<Integer, Person> map) {
         try(FileWriter writer = new FileWriter(FILE_PATH)) {
-            for (Map.Entry<Integer,String> entry : map.entrySet()) {
-                writer.write(entry.getKey() + ":" + entry.getValue() + "\n");
+            for (Map.Entry<Integer,Person> entry : map.entrySet()) {
+                String json = mapper.objectToJson(entry.getValue());
+                writer.write(entry.getKey() + ":" + json + "\n");
             }
 
         } catch (IOException e) {

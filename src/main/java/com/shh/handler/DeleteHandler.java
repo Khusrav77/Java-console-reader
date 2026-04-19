@@ -2,20 +2,20 @@ package com.shh.handler;
 
 import com.shh.model.Command;
 import com.shh.model.OutputMessage;
-import com.shh.service.MessageService;
+import com.shh.service.Service;
 
 
 public final class DeleteHandler implements CommandHandler{
 
-    private MessageService messageService;
+    private Service service;
 
-    public DeleteHandler(MessageService messageService) {
-        this.messageService = messageService;
+    public DeleteHandler(Service service) {
+        this.service = service;
     }
 
     @Override
     public OutputMessage handle(Command command) {
-        var result = messageService.delete(command.getId());
+        var result = service.delete(command.getId());
         return new OutputMessage(result);
     }
 }
