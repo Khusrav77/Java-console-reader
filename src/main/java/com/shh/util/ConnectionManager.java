@@ -1,10 +1,10 @@
-package com.shh.service;
+package com.shh.util;
 
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Connection;
 
-    public class ConnectionManager {
+    public final class ConnectionManager {
 
         private static final String URL_KEY = "db.url";
         private static final String USER_KEY = "db.user";
@@ -14,7 +14,11 @@ import java.sql.Connection;
 
         public static Connection getConnection() {
             try {
-                return DriverManager.getConnection(URL_KEY, USER_KEY, PASSWORD_KEY);
+                return DriverManager.getConnection(
+                        PropertiesUtil.get(URL_KEY),
+                        PropertiesUtil.get(USER_KEY),
+                        PropertiesUtil.get(PASSWORD_KEY)
+                );
             } catch (SQLException e) {
                 throw new RuntimeException("Ошибка подключения к БД", e);
             }
