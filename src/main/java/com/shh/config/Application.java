@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shh.dispacher.CommandDispatcher;
 import com.shh.model.Command;
 import com.shh.model.OutputMessage;
-import com.shh.repository.Repository;
+import com.shh.repository.JdbcRepository;
 import com.shh.service.DataLoader;
 import com.shh.service.Parser;
 import com.shh.service.Service;
@@ -15,17 +15,14 @@ import java.util.Scanner;
 public class Application {
 
     private final ConfigApp configApp;
-    private final DataLoader dataLoader;
-    private final Repository repository;
+    private final JdbcRepository repository;
     private final CommandDispatcher dispatcher;
     private final Parser parser;
 
     public Application() {
         this.configApp = new ConfigApp();
         ObjectMapper mapper = configApp.mapper();
-        this.dataLoader = configApp.dataLoader(mapper);
-        var initialData = dataLoader.load();
-        this.repository = configApp.repository(initialData);
+        this.repository = configApp.repository();
         Service service = configApp.service(repository);
         this.dispatcher = configApp.dispatcher(service, mapper);
         Validator validator = configApp.validator();
@@ -48,6 +45,6 @@ public class Application {
                 }
             }
         }
-        dataLoader.save(repository.getMap());
+
     }
 }

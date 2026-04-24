@@ -1,15 +1,16 @@
 package com.shh.service;
 
 import com.shh.model.Person;
+import com.shh.repository.JdbcRepository;
 import com.shh.repository.Repository;
 import java.util.Collection;
 
 
 public class ServiceImpl implements Service {
 
-    private final Repository<Integer,Person> repository;
+    private final JdbcRepository<Person> repository;
 
-    public ServiceImpl(Repository<Integer, Person> repository) {
+    public ServiceImpl(JdbcRepository<Person> repository) {
         this.repository = repository;
     }
 

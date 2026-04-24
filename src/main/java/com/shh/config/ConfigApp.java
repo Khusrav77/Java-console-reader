@@ -3,6 +3,8 @@ package com.shh.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shh.dispacher.CommandDispatcher;
 import com.shh.model.Person;
+import com.shh.repository.JdbcRepository;
+import com.shh.repository.JdbcRepositoryImpl;
 import com.shh.repository.Repository;
 import com.shh.service.*;
 import com.shh.handler.*;
@@ -35,9 +37,7 @@ public final class ConfigApp {
     public Parser parser(Validator validator) {return new Parser(validator);}
     public ObjectMapper mapper() {return new ObjectMapper();}
     public DataLoader dataLoader(ObjectMapper mapper) {return new DataLoaderImpl(mapper);}
-    public Service service(Repository repository) {return new ServiceImpl(repository);}
-    public Repository repository(Map<Integer, Person> storage) {
-        return new RepositoryImpl(storage);
-    }
+    public Service service(JdbcRepository repository) {return new ServiceImpl(repository);}
+    public JdbcRepository repository() {return new JdbcRepositoryImpl();}
 
 }

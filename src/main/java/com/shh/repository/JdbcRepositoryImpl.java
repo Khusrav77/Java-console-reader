@@ -1,8 +1,7 @@
 package com.shh.repository;
 
 import com.shh.model.Person;
-
-import java.sql.Connection;
+import com.shh.util.ConnectionManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,25 +12,21 @@ import java.util.Optional;
 
 public class JdbcRepositoryImpl implements JdbcRepository<Person>{
 
-    private final Connection connection;
+    private static final String INSERT = "INSERT INTO person (name, age) VALUES (?, ?)";
+    private static final String SELECT = "SELECT * FROM person WHERE id = ?";
+    private static final String SELECT_ALL = "SELECT * FROM person";
+    private static final String UPDATE = "UPDATE person SET name = ?, age = ? WHERE id = ?";
+    private static final String DELETE = "DELETE FROM person WHERE id = ?";
 
-    private static String INSERT = "INSERT INTO person (name, age) VALUES (?, ?)";
-    private static String SELECT = "SELECT * FROM person WHERE id = ?";
-    private static String SELECT_ALL = "SELECT * FROM person";
-    private static String UPDATE = "UPDATE person SET name = ?, age = ? WHERE id = ?";
-    private static String DELETE = "DELETE FROM person WHERE id = ?";
-
-    public JdbcRepositoryImpl(Connection connection) {
-        this.connection = connection;
-    }
 
     @Override
     public Integer create(Person person) {
 
-        try (PreparedStatement ps = connection.prepareStatement(INSERT)) {
+        try (PreparedStatement ps = ConnectionManager.getConnection().prepareStatement(INSERT)) {
             ps.setString(1, person.getName());
             ps.setInt(2, person.getAge());
             ps.executeUpdate();
+
 
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
@@ -46,7 +41,7 @@ public class JdbcRepositoryImpl implements JdbcRepository<Person>{
 
     @Override
     public Optional<Person> get(Integer id) {
-        try(PreparedStatement ps = connection.prepareStatement(SELECT)) {
+        try(PreparedStatement ps = ConnectionManager.getConnection().prepareStatement(SELECT)) {
             ps.setInt(1, id);
 
             ResultSet rs = ps.executeQuery();
@@ -67,7 +62,7 @@ public class JdbcRepositoryImpl implements JdbcRepository<Person>{
     public Collection<Person> getAll() {
         List<Person> list = new ArrayList<>();
 
-        try(PreparedStatement ps = connection.prepareStatement(SELECT_ALL)) {
+        try(PreparedStatement ps = ConnectionManager.getConnection().prepareStatement(SELECT_ALL)) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(new Person(
@@ -86,7 +81,7 @@ public class JdbcRepositoryImpl implements JdbcRepository<Person>{
     @Override
     public void update(Integer id, Person person) {
 
-        try(PreparedStatement ps = connection.prepareStatement(UPDATE)) {
+        try(PreparedStatement ps = ConnectionManager.getConnection().prepareStatement(UPDATE)) {
             ps.setString(1, person.getName());
             ps.setInt(2, person.getAge());
             ps.setInt(3, id);
@@ -101,7 +96,7 @@ public class JdbcRepositoryImpl implements JdbcRepository<Person>{
 
     @Override
     public boolean delete(Integer id) {
-        try(PreparedStatement ps = connection.prepareStatement(DELETE)) {
+        try(PreparedStatement ps = ConnectionManager.getConnection().prepareStatement(DELETE)) {
             ps.setInt(1, id);
            return ps.executeUpdate() > 0;
 
