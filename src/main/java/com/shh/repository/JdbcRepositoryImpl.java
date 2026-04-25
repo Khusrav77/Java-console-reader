@@ -27,14 +27,14 @@ public class JdbcRepositoryImpl implements JdbcRepository<Person>{
             ps.setInt(2, person.getAge());
             ps.executeUpdate();
 
-
-            ResultSet rs = ps.getGeneratedKeys();
-            if (rs.next()) {
-                return rs.getInt(1);
+            try(ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Error while creating person", e);
         }
         return null;
     }

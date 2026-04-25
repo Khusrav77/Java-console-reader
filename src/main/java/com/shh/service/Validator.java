@@ -90,8 +90,8 @@ public final class Validator {
 
     private boolean isValidJson(String json) {
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.readValue(json, Person.class);
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.readValue(json, Person.class);
             return true;
         } catch (JsonProcessingException e) {
             return false;

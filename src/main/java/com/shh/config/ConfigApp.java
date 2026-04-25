@@ -34,7 +34,7 @@ public final class ConfigApp {
     }
 
     public Validator validator() {return new Validator();}
-    public Parser parser(Validator validator) {return new Parser(validator);}
+    public Parser parser(Validator validator, ObjectMapper mapper ) {return new Parser(validator, mapper);}
     public ObjectMapper mapper() {return new ObjectMapper();}
     public DataLoader dataLoader(ObjectMapper mapper) {return new DataLoaderImpl(mapper);}
     public Service service(JdbcRepository repository) {return new ServiceImpl(repository);}

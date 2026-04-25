@@ -16,6 +16,8 @@ public final class Person {
         this.age = age;
     }
 
+    public Person(){}
+
 
     public Integer getId() {return id;}
 

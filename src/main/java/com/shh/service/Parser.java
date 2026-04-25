@@ -9,9 +9,11 @@ import com.shh.model.Person;
 public  class Parser {
 
     private final Validator validator;
+    private final ObjectMapper mapper;
 
-    public Parser(Validator validator) {
+    public Parser(Validator validator, ObjectMapper mapper) {
         this.validator = validator;
+        this.mapper = mapper;
     }
 
     public Command parse (String input) throws JsonProcessingException {
@@ -35,8 +37,7 @@ public  class Parser {
     }
 
     private Command parseCreate(String[] data) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        Person person = objectMapper.readValue(data[1], Person.class);
+        Person person = mapper.readValue(data[1], Person.class);
         return new Command(CommandType.CREATE, null, person);
     }
 
@@ -49,10 +50,9 @@ public  class Parser {
     }
 
     private Command parseUpdate(String[] data) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
         var id = Integer.parseInt(data[1]);
         var newValue = data[2];
-        Person person = objectMapper.readValue(newValue, Person.class);
+        Person person = mapper.readValue(newValue, Person.class);
         return new Command(CommandType.UPDATE, id, person);
     }
 

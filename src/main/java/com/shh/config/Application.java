@@ -5,7 +5,6 @@ import com.shh.dispacher.CommandDispatcher;
 import com.shh.model.Command;
 import com.shh.model.OutputMessage;
 import com.shh.repository.JdbcRepository;
-import com.shh.service.DataLoader;
 import com.shh.service.Parser;
 import com.shh.service.Service;
 import com.shh.service.Validator;
@@ -26,7 +25,7 @@ public class Application {
         Service service = configApp.service(repository);
         this.dispatcher = configApp.dispatcher(service, mapper);
         Validator validator = configApp.validator();
-        this.parser = configApp.parser(validator);
+        this.parser = configApp.parser(validator, mapper);
     }
 
     public void start() {
