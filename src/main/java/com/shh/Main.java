@@ -1,12 +1,8 @@
 package com.shh;
-
-import com.shh.config.Application;
-
-
+import com.shh.config.ConfigApp;
 
 public class Main {
     public static void main(String[] args) {
-         new Application().start();
-
+        new ConfigApp().application().start();
     }
 }
