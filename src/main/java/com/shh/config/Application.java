@@ -1,6 +1,5 @@
 package com.shh.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shh.dispacher.CommandDispatcher;
 import com.shh.model.Command;
 import com.shh.model.OutputMessage;

@@ -14,7 +14,15 @@ import java.util.Map;
 
 public final class ConfigApp {
 
-    public Application application(){return new Application(dispatcher(),parser());}
+    public Application application(){
+        return new Application(
+                dispatcher(
+                        createHandler(),
+                        getHandler(),
+                        getAllHandler(),
+                        updateHandler(),
+                        deleteHandler()),
+                parser());}
 
     private Validator validator() {return new Validator();}
     private ObjectMapper mapper() {return new ObjectMapper();}
@@ -28,13 +36,18 @@ public final class ConfigApp {
     private CommandHandler updateHandler(){return new UpdateHandler(service());}
     private CommandHandler deleteHandler(){return new DeleteHandler(service());}
 
-    private CommandDispatcher dispatcher(){
+    private CommandDispatcher dispatcher(
+            CommandHandler create,
+            CommandHandler get,
+            CommandHandler update,
+            CommandHandler delete,
+            CommandHandler getAll) {
         Map<CommandType, CommandHandler> handlers = Map.of(
-                CommandType.CREATE, createHandler(),
-                CommandType.GET, getHandler(),
-                CommandType.GET_ALL, getAllHandler(),
-                CommandType.UPDATE, updateHandler(),
-                CommandType.DELETE, deleteHandler()
+                CommandType.CREATE, create,
+                CommandType.GET, get,
+                CommandType.GET_ALL, getAll,
+                CommandType.UPDATE, update,
+                CommandType.DELETE, delete
         );
         return new CommandDispatcher(handlers);
     }
