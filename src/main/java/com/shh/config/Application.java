@@ -1,31 +1,19 @@
 package com.shh.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shh.dispacher.CommandDispatcher;
 import com.shh.model.Command;
 import com.shh.model.OutputMessage;
-import com.shh.repository.JdbcRepository;
 import com.shh.service.Parser;
-import com.shh.service.Service;
-import com.shh.service.Validator;
-
 import java.util.Scanner;
 
 public class Application {
 
-    private final ConfigApp configApp;
-    private final JdbcRepository repository;
     private final CommandDispatcher dispatcher;
     private final Parser parser;
 
-    public Application() {
-        this.configApp = new ConfigApp();
-        ObjectMapper mapper = configApp.mapper();
-        this.repository = configApp.repository();
-        Service service = configApp.service(repository);
-        this.dispatcher = configApp.dispatcher(service, mapper);
-        Validator validator = configApp.validator();
-        this.parser = configApp.parser(validator, mapper);
+    public Application(CommandDispatcher dispatcher, Parser parser) {
+        this.dispatcher = dispatcher;
+        this.parser = parser;
     }
 
     public void start() {
@@ -44,6 +32,5 @@ public class Application {
                 }
             }
         }
-
     }
 }

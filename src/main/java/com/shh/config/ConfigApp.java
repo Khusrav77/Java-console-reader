@@ -14,30 +14,41 @@ import java.util.Map;
 
 public final class ConfigApp {
 
+    public Application application(){
+        return new Application(
+                dispatcher(
+                        createHandler(),
+                        getHandler(),
+                        getAllHandler(),
+                        updateHandler(),
+                        deleteHandler()),
+                parser());}
 
-    public CommandDispatcher dispatcher(Service service, ObjectMapper mapper){
-        CommandHandler createHandler = new  CreateHandler(service);
-        CommandHandler getHandler = new GetHandler(service, mapper);
-        CommandHandler getAllHandler = new GetAllHandler(service, mapper);
-        CommandHandler updateHandler =  new UpdateHandler(service);
-        CommandHandler deleteHandler = new DeleteHandler(service);
+    private Validator validator() {return new Validator();}
+    private ObjectMapper mapper() {return new ObjectMapper();}
+    private Parser parser() {return new Parser(validator(), mapper());}
+    private JdbcRepository repository() {return new JdbcRepositoryImpl();}
+    private Service service() {return new ServiceImpl(repository());}
 
+    private CommandHandler createHandler(){return new CreateHandler(service());}
+    private CommandHandler getHandler(){return new GetHandler(service(), mapper());}
+    private CommandHandler getAllHandler(){return new GetAllHandler(service(), mapper());}
+    private CommandHandler updateHandler(){return new UpdateHandler(service());}
+    private CommandHandler deleteHandler(){return new DeleteHandler(service());}
+
+    private CommandDispatcher dispatcher(
+            CommandHandler create,
+            CommandHandler get,
+            CommandHandler update,
+            CommandHandler delete,
+            CommandHandler getAll) {
         Map<CommandType, CommandHandler> handlers = Map.of(
-                CommandType.CREATE, createHandler,
-                CommandType.GET, getHandler,
-                CommandType.GET_ALL, getAllHandler,
-                CommandType.UPDATE, updateHandler,
-                CommandType.DELETE, deleteHandler
+                CommandType.CREATE, create,
+                CommandType.GET, get,
+                CommandType.GET_ALL, getAll,
+                CommandType.UPDATE, update,
+                CommandType.DELETE, delete
         );
-
         return new CommandDispatcher(handlers);
     }
-
-    public Validator validator() {return new Validator();}
-    public Parser parser(Validator validator, ObjectMapper mapper ) {return new Parser(validator, mapper);}
-    public ObjectMapper mapper() {return new ObjectMapper();}
-    public DataLoader dataLoader(ObjectMapper mapper) {return new DataLoaderImpl(mapper);}
-    public Service service(JdbcRepository repository) {return new ServiceImpl(repository);}
-    public JdbcRepository repository() {return new JdbcRepositoryImpl();}
-
 }

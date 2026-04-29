@@ -5,6 +5,7 @@ import com.shh.util.ConnectionManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -22,7 +23,7 @@ public class JdbcRepositoryImpl implements JdbcRepository<Person>{
     @Override
     public Integer create(Person person) {
 
-        try (PreparedStatement ps = ConnectionManager.getConnection().prepareStatement(INSERT)) {
+        try (PreparedStatement ps = ConnectionManager.getConnection().prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, person.getName());
             ps.setInt(2, person.getAge());
             ps.executeUpdate();
@@ -91,7 +92,6 @@ public class JdbcRepositoryImpl implements JdbcRepository<Person>{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
